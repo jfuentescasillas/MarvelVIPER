@@ -16,6 +16,7 @@
 		119BD317282C0245009C474B /* MarvelVIPERTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119BD316282C0245009C474B /* MarvelVIPERTests.swift */; };
 		119BD321282C0245009C474B /* MarvelVIPERUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119BD320282C0245009C474B /* MarvelVIPERUITests.swift */; };
 		119BD323282C0245009C474B /* MarvelVIPERUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119BD322282C0245009C474B /* MarvelVIPERUITestsLaunchTests.swift */; };
+		119BD330282C079F009C474B /* SensitiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119BD32F282C079F009C474B /* SensitiveData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		119BD31C282C0245009C474B /* MarvelVIPERUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarvelVIPERUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		119BD320282C0245009C474B /* MarvelVIPERUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelVIPERUITests.swift; sourceTree = "<group>"; };
 		119BD322282C0245009C474B /* MarvelVIPERUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelVIPERUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		119BD32F282C079F009C474B /* SensitiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveData.swift; path = MarvelVIPER/SensitiveData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		119BD2F3282C023F009C474B = {
 			isa = PBXGroup;
 			children = (
+				119BD32F282C079F009C474B /* SensitiveData.swift */,
 				119BD2FE282C023F009C474B /* MarvelVIPER */,
 				119BD315282C0245009C474B /* MarvelVIPERTests */,
 				119BD31F282C0245009C474B /* MarvelVIPERUITests */,
@@ -260,6 +263,7 @@
 			files = (
 				119BD304282C023F009C474B /* ViewController.swift in Sources */,
 				119BD300282C023F009C474B /* AppDelegate.swift in Sources */,
+				119BD330282C079F009C474B /* SensitiveData.swift in Sources */,
 				119BD302282C023F009C474B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,7 +458,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -482,7 +486,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
