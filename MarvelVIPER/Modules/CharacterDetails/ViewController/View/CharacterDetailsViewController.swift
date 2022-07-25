@@ -20,8 +20,11 @@ struct CharacterDetailsViewModel {
 }
 
 
-protocol CharacterDetailsPresenterToViewProtocol {
-	func fetchDataFromPresenterToView(charDetailsViewModel: CharacterDetailsViewModel)
+// MARK: - CharacterDetailsTableViewProtocol
+protocol CharacterDetailsTableViewProtocol {
+	func startActivity()
+	func stopAndHideActivity()
+	func reloadTableView()
 }
 
 
@@ -32,6 +35,7 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
 		
 	// MARK: Elements in Storyboard
 	@IBOutlet weak var characterDetailsTableView: UITableView!
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	
 	
 	// MARK: - Life cycle
@@ -61,7 +65,7 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		guard let cell = characterDetailsTableView.dequeueReusableCell(withIdentifier: "characterBibliographyCell", for: indexPath) as? CharacterBibliographyTableViewCell else { return UITableViewCell() }
 		
 		let viewModelSection = indexPath.section
-		print("viewModelSection: \(viewModelSection)")
+		//print("viewModelSection: \(viewModelSection)")
 		
 		switch viewModelSection {
 		case 0:  // Character's Image Section
@@ -131,7 +135,7 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 			return cell
 			
 		default:
-			return UITableViewCell()  //cell
+			return UITableViewCell()
 		}
 	}
 }
@@ -167,14 +171,30 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 }
 
 
-// MARK: - Extension. CharacterDetailsPresenterToViewProtocol
-extension CharacterDetailsViewController: CharacterDetailsPresenterToViewProtocol {
-	func fetchDataFromPresenterToView(charDetailsViewModel: CharacterDetailsViewModel) {
-		print("charDetailsViewModel: \(charDetailsViewModel)")
-		title = charDetailsViewModel.characterName
+// MARK: - Extension. CharacterDetailsTableViewProtocol
+extension CharacterDetailsViewController: CharacterDetailsTableViewProtocol {
+	// MARK: Activity Indicator Controllers
+	func startActivity() {
+		DispatchQueue.main.async {
+			self.activityIndicator.startAnimating()
+			self.characterDetailsTableView.isHidden = true
+		}
 	}
 	
 	
+	func stopAndHideActivity() {
+		DispatchQueue.main.async {
+			self.activityIndicator.stopAnimating()
+			self.activityIndicator.hidesWhenStopped = true
+			
+			self.characterDetailsTableView.isHidden = false
+			// layoutIfNeeded() is needed in order to see the elements of the collection view in the last cell, otherwise, when the pagination is done, the collection view shows the requested items from the beginning (array's 1st item), and not from the array's last item (which is what is wanted)
+			self.characterDetailsTableView.layoutIfNeeded()
+		}
+	}
+	
+	
+	// MARK: Reload tableView
 	func reloadTableView() {
 		characterDetailsTableView.reloadData()
 	}
