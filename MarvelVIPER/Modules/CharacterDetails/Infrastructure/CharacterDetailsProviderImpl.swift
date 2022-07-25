@@ -42,9 +42,3 @@ class CharacterDetailsProviderImpl: CharacterDetailsProviderProtocol {
 		}.store(in: &cancellable)
 	}
 }
-
-
-/*
- Bueno:   https://gateway.marvel.com/v1/public/characters/1010853?apikey=b5a004aac50e22dbccea83b58947bf97&ts=1&hash=cf8530437ab0e239d120f70010f33a34
- Impreso: https://gateway.marvel.com/v1/public/characters/1017100?apikey=b5a004aac50e22dbccea83b58947bf97&ts=1&hash=cf8530437ab0e239d120f70010f33a34
- */

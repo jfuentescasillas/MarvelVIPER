@@ -75,11 +75,17 @@
                                     <outlet property="delegate" destination="Y6W-OH-hqX" id="f2U-DS-ZGg"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="dEL-Pz-lbR">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="dEL-Pz-lbR" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Bs2-E3-cMi"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="ig4-XJ-1jf" secondAttribute="bottom" id="Hge-Zb-UmE"/>
+                            <constraint firstItem="dEL-Pz-lbR" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="Jfc-3o-dOx"/>
                             <constraint firstItem="ig4-XJ-1jf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="bQg-rm-p5F"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ig4-XJ-1jf" secondAttribute="trailing" id="d8h-V6-8L4"/>
                             <constraint firstItem="ig4-XJ-1jf" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uLy-bp-hXi"/>
@@ -87,6 +93,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="VCy-v6-ma8"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="dEL-Pz-lbR" id="LuF-DV-qOL"/>
                         <outlet property="characterDetailsTableView" destination="ig4-XJ-1jf" id="6yq-I5-Ele"/>
                     </connections>
                 </viewController>

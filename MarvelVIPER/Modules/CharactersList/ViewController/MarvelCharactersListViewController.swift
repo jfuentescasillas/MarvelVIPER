@@ -10,7 +10,8 @@ import UIKit
 
 
 protocol MarvelCharactersListViewProtocol {
-	//func fetchDataFromPresenterToView(results: [MarvelResults])
+	func startActivity()
+	func stopAndHideActivity()
 	func reloadCollectionViewData()
 }
 
@@ -39,6 +40,7 @@ class MarvelCharactersListViewController: BaseViewController<MarvelCharactersLis
 	
 	// MARK: Elements in storyboard
 	@IBOutlet weak var marvelCharactersCollectionView: UICollectionView!
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	
 	
 	// MARK: Life Cycle
@@ -60,7 +62,29 @@ class MarvelCharactersListViewController: BaseViewController<MarvelCharactersLis
 
 
 extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
-	internal func reloadCollectionViewData() {
+	// Activity Indicator Controllers
+	func startActivity() {
+		DispatchQueue.main.async {
+			self.activityIndicator.startAnimating()
+			self.marvelCharactersCollectionView.isHidden = true
+		}
+	}
+	
+	
+	func stopAndHideActivity() {
+		DispatchQueue.main.async {
+			self.activityIndicator.stopAnimating()
+			self.activityIndicator.hidesWhenStopped = true
+			
+			self.marvelCharactersCollectionView.isHidden = false
+			// layoutIfNeeded() is needed in order to see the elements of the collection view in the last cell, otherwise, when the pagination is done, the collection view shows the requested items from the beginning (array's 1st item), and not from the array's last item (which is what is wanted)
+			self.marvelCharactersCollectionView.layoutIfNeeded()
+		}
+	}
+	
+	
+	// Reload collectionView
+	func reloadCollectionViewData() {
 		DispatchQueue.main.async {
 			self.marvelCharactersCollectionView.reloadData()
 			// layoutIfNeeded() is used in order to see the elements of the collection view in the last cell, otherwise, when the pagination is done, the collection view shows the requested items from the beginning (array's 1st item), and not from the array's last item (which is what is wanted)
