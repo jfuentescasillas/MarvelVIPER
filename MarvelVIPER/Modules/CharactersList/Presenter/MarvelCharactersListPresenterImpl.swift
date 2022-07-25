@@ -44,6 +44,8 @@ class MarvelCharactersListPresenterImpl: BasePresenter<MarvelCharactersListViewC
 
 extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtocol {
 	func fetchCharactersFromAPI() {
+		viewController?.startActivity()
+		
 		interactor?.fetchCharactersFromAPIBusiness(pageOffset: pageOffset, success: { [weak self] resultArray in
 			guard self != nil else { return }
 			
@@ -52,8 +54,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 			self?.viewModel.removeAll()
 			self?.viewModel = resultArray
 						
-			// Output data going from Presenter to View
-			// Safely unwrapped thanks to guard let result array = resultArray
+			self?.viewController?.stopAndHideActivity()
 		}, failure: { errorApi in
 			print(errorApi?.localizedDescription ?? "Problems fetching the Marvel Characters")
 		})
@@ -68,6 +69,8 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 	
 	
 	internal func fetchNextCharacters() {
+		viewController?.startActivity()
+		
 		// When the last page of characters is reached, the api will fetch back less than 100 characters (which is the maximum nr. of chars. asked to the api), this means that when the numCharacters is less than 100...
 		if numCharacters < 100 {
 			hasMoreCharacters = false
@@ -88,6 +91,8 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 				self?.viewModel += resultArray
 				
 				self?.isLoadingMoreCharacters = false
+				
+				self?.viewController?.stopAndHideActivity()
 			}, failure: { errorApi in
 				print(errorApi?.localizedDescription ?? "Problems fetching more Marvel Characters (could not use pagination)")
 			})

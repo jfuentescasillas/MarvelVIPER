@@ -35,8 +35,11 @@ class CharacterBibliographyTableViewCell: UITableViewCell {
 			case 4:
 				textLabel?.text = kConstantKeyStrings().kNoCharStories
 				
-			default:
+			case 5:
 				textLabel?.text = kConstantKeyStrings().kNoCharEvents
+				
+			default:
+				textLabel?.text = kConstantKeyStrings().kNoCharDescription
 			}			
 		}
 	}
