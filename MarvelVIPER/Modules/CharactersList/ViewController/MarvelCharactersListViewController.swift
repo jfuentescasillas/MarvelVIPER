@@ -13,6 +13,9 @@ protocol MarvelCharactersListViewProtocol {
 	func startActivity()
 	func stopAndHideActivity()
 	func reloadCollectionViewData()
+	func showNoInternetMsg()
+	func showClientRequestErrorMsg()
+	func showServerErrorMsg()
 }
 
 
@@ -39,14 +42,19 @@ class MarvelCharactersListViewController: BaseViewController<MarvelCharactersLis
 	
 	
 	// MARK: Elements in storyboard
+	@IBOutlet weak var resetSearchBtn: UIBarButtonItem!
+	@IBOutlet weak var characterSearchBar: UISearchBar!
 	@IBOutlet weak var marvelCharactersCollectionView: UICollectionView!
 	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet weak var messageLbl: UILabel!  // This label will indicate when the device has no internet and when there are no results in the search bar
+	@IBOutlet weak var reloadCharsBtnOutlet: UIButton!
 	
 	
 	// MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		setSearchBar()
 		presenter?.fetchCharactersFromAPI()
     }
 	
@@ -58,6 +66,27 @@ class MarvelCharactersListViewController: BaseViewController<MarvelCharactersLis
 		
 		marvelCharactersCollectionView.setCollectionViewLayout(cellLayout, animated: false)
 	}
+	
+	
+	// MARK: - SearchBar config
+	private func setSearchBar() {
+		resetSearchBtn.isEnabled       = false
+		characterSearchBar.delegate    = self
+		characterSearchBar.placeholder = "charsSearchBarPlaceholder".localized
+	}
+	
+	
+	// MARK: - Action Buttons
+	@IBAction func resetCharSearchBtnAction(_ sender: Any) {
+		//presenter?.resetButtonPressed()
+		characterSearchBar.text = ""
+		resetSearchBtn.isEnabled = false
+	}
+	
+	
+	@IBAction func reloadCharsBtnAction(_ sender: Any) {
+		presenter?.fetchCharactersFromAPI()
+	}
 }
 
 
@@ -66,6 +95,8 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	func startActivity() {
 		DispatchQueue.main.async {
 			self.activityIndicator.startAnimating()
+			self.messageLbl.isHidden = true
+			self.reloadCharsBtnOutlet.isHidden = true
 			self.marvelCharactersCollectionView.isHidden = true
 		}
 	}
@@ -91,8 +122,73 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 			self.marvelCharactersCollectionView.layoutIfNeeded()
 		}
 	}
+	
+	
+	// Show Message and Label when user has NO internet
+	func showNoInternetMsg() {
+		showElementsController()
+		
+		messageLbl.isHidden = false
+		messageLbl.text = "noInternetMsg".localized
+		
+		let alertController = UIAlertController(title: "noInternetTitle".localized, message: "noInternetMsg".localized, preferredStyle: .actionSheet)
+		alertController.addAction((UIAlertAction(title: "retryBtnTitle".localized, style: .default, handler: tryReload)))
+		alertController.addAction(UIAlertAction(title: "cancelBtnTitle".localized, style: .cancel))
+				
+		self.present(alertController, animated: true, completion: nil)
+	}
+	
+	
+	// Show Client (user's device) request error
+	func showClientRequestErrorMsg() {
+		showElementsController()
+		
+		messageLbl.isHidden = false
+		messageLbl.text = "badRequestMsg".localized
+		
+		let alertController = UIAlertController(title: "alertControllerBadRequestTitle".localized,
+												message: "alertControllerBadRequestMsg".localized,
+												preferredStyle: .actionSheet)
+		alertController.addAction((UIAlertAction(title: "retryBtnTitle".localized, style: .default, handler: tryReload)))
+		alertController.addAction(UIAlertAction(title: "cancelBtnTitle".localized, style: .cancel))
+				
+		self.present(alertController, animated: true, completion: nil)
+	}
+	
+	
+	// Show Server response error
+	func showServerErrorMsg() {
+		showElementsController()
+		
+		messageLbl.isHidden = false
+		messageLbl.text = "badResponseMsg".localized
+		
+		let alertController = UIAlertController(title: "alertControllerBadResponseTitle".localized,
+												message: "alertControllerBadResponseMsg".localized,
+												preferredStyle: .actionSheet)
+		alertController.addAction((UIAlertAction(title: "retryBtnTitle".localized, style: .default, handler: tryReload)))
+		alertController.addAction(UIAlertAction(title: "cancelBtnTitle".localized, style: .cancel))
+				
+		self.present(alertController, animated: true, completion: nil)
+	}
+	
+	
+	private func showElementsController() {
+		activityIndicator.stopAnimating()
+		activityIndicator.hidesWhenStopped = true
+		
+		marvelCharactersCollectionView.isHidden = true
+		
+		reloadCharsBtnOutlet.isHidden = false
+		reloadCharsBtnOutlet.setTitle("reloadCharsButtonTitle".localized, for: .normal)
+	}
+	
+	
+	// Fetch again the characters from the beginning
+	private func tryReload(action: UIAlertAction) {
+		presenter?.fetchCharactersFromAPI()
+	}
 }
-
 
 
 // MARK: - Extension. CollectionView Datasource
@@ -113,13 +209,13 @@ extension MarvelCharactersListViewController: UICollectionViewDataSource {
 }
 
 
-// MARK: - Extension. CollectionView Delegate
+// MARK: - Extension. CollectionViewDelegate
 extension MarvelCharactersListViewController: UICollectionViewDelegate {
 	// MARK: - Pagination
 	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-		let offsetY 		= scrollView.contentOffset.y     // y coordinate (up and down)
-		let contentHeight 	= scrollView.contentSize.height  // The entire scrollview, if there are 5,000 items, it will be very tall
-		let height 			= scrollView.frame.size.height   // Screen's height
+		let offsetY 	  = scrollView.contentOffset.y     // y coordinate (up and down)
+		let contentHeight = scrollView.contentSize.height  // The entire scrollview, if there are 5,000 items, it will be very tall
+		let height 		  = scrollView.frame.size.height   // Screen's height
 		
 		if (offsetY > (contentHeight - height)) {
 			presenter?.fetchNextCharacters()
@@ -130,5 +226,55 @@ extension MarvelCharactersListViewController: UICollectionViewDelegate {
 	// MARK: - Navigate to Details VC
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		presenter?.didselectItem(at: indexPath)
+	}
+}
+
+
+// MARK: - Extension: UISearchBarDelegate
+extension MarvelCharactersListViewController: UISearchBarDelegate {
+	// MARK: UISearchBarDelegate Methods
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		characterSearchBar.text = ""
+				
+		// This lines help to hide the keyboard once the cancel button was clicked
+		DispatchQueue.main.async {
+			searchBar.resignFirstResponder()
+		}
+	}
+	
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		// Can't make searches if the text is empty or if it has only one blank space
+		if searchBar.text == "" || searchBar.text == " " {
+			return
+		}
+		
+		// Use of guard var instead of guard let since its value will later change
+		guard var searchedChar = searchBar.text else { return }
+		
+		print("searchedChar: \(searchedChar)")
+		
+		// The search can only contain numbers and/or digits, otherwise it fails.
+		if searchedChar.isAlphanumeric {
+			// If the query has white spaces, it is replaced by %20, (which is the hexadecimal value for the white space used in an encoded URL)
+			// Example: if the query is "alpha dog", it will be changed to "alpha%20dog", which is a valid encoded URL address for the API
+			searchedChar = searchedChar.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+			//presenter?.fetchSearchedItems(searchedName: searchedChar) <<<<<<<<<<< PENDING
+		} else {
+			showMessageAlert(title: "alertControllerInvalidTextInputTitle".localized,
+							 message: "alertControllerInvalidTextInputMsg".localized)
+		}
+		
+		// This lines help to hide the keyboard once the search was requested
+		DispatchQueue.main.async {
+			searchBar.resignFirstResponder()
+		}
+	}
+	
+	
+	// MARK: - Custom Methods related to the searchBar (not part of UISearchBarDelegate)
+	// Reset button is active when a search has been made
+	func searchBeerIsActive() {
+		resetSearchBtn.isEnabled = true
 	}
 }

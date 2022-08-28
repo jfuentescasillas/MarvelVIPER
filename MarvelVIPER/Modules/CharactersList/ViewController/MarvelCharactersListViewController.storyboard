@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a84-mK-5XM">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jXL-NA-NiV">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="132" width="414" height="730"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8lN-Gj-Puy">
                                     <size key="itemSize" width="368" height="260"/>
@@ -35,7 +35,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hvv-TG-7nx">
-                                                    <rect key="frame" x="5" y="5.5" width="125" height="249"/>
+                                                    <rect key="frame" x="5" y="5.9999999999999858" width="125" height="248.66666666666663"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="125" id="sA8-12-4Mi"/>
                                                     </constraints>
@@ -86,26 +86,75 @@
                                     <outlet property="delegate" destination="Y6W-OH-hqX" id="3OG-9t-CLH"/>
                                 </connections>
                             </collectionView>
+                            <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nFR-zM-kPp">
+                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="rGG-Sr-Mhb"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="X8A-8P-cgH">
-                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
                                 <color key="color" systemColor="systemRedColor"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device without internet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kpm-aO-l90">
+                                <rect key="frame" x="16" y="438" width="382" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l9Q-hH-9j2">
+                                <rect key="frame" x="40" y="481.66666666666669" width="334" height="44.000000000000057"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="YcT-Cf-srj"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Reload"/>
+                                <connections>
+                                    <action selector="reloadCharsBtnAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="tbf-gz-f7g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
+                            <constraint firstItem="nFR-zM-kPp" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="2Ms-yj-rX7"/>
                             <constraint firstItem="jXL-NA-NiV" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="2w0-T8-jYa"/>
-                            <constraint firstItem="jXL-NA-NiV" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Emc-Fe-ipO"/>
+                            <constraint firstItem="nFR-zM-kPp" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="FpE-pK-5mq"/>
+                            <constraint firstItem="l9Q-hH-9j2" firstAttribute="top" secondItem="Kpm-aO-l90" secondAttribute="bottom" constant="23.5" id="LfP-hl-4AC"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Kpm-aO-l90" secondAttribute="trailing" constant="16" id="NlU-gZ-S46"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="l9Q-hH-9j2" secondAttribute="trailing" constant="40" id="TIk-Wz-GJB"/>
+                            <constraint firstItem="l9Q-hH-9j2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="40" id="Uq3-gT-DZ2"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="jXL-NA-NiV" secondAttribute="trailing" id="WwC-aN-BAH"/>
                             <constraint firstItem="X8A-8P-cgH" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="YTS-EQ-oCt"/>
+                            <constraint firstItem="Kpm-aO-l90" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="atD-rQ-81e"/>
+                            <constraint firstItem="jXL-NA-NiV" firstAttribute="top" secondItem="nFR-zM-kPp" secondAttribute="bottom" id="fvM-Gt-YIZ"/>
+                            <constraint firstItem="nFR-zM-kPp" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="gEo-Yh-bch"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="l9Q-hH-9j2" secondAttribute="bottom" priority="250" constant="336" id="qEM-cQ-BNV"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="jXL-NA-NiV" secondAttribute="bottom" id="wAl-RX-jfM"/>
+                            <constraint firstItem="Kpm-aO-l90" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="xf8-sY-Ddk"/>
+                            <constraint firstItem="Kpm-aO-l90" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="xif-aL-rPY"/>
                             <constraint firstItem="X8A-8P-cgH" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="zUw-Pr-5Ba"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="cIY-1j-J0X"/>
+                    <navigationItem key="navigationItem" id="cIY-1j-J0X">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="JYx-hg-lX0">
+                            <connections>
+                                <action selector="resetCharSearchBtnAction:" destination="Y6W-OH-hqX" id="mKn-cY-Gfl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="X8A-8P-cgH" id="f88-kV-xsH"/>
+                        <outlet property="characterSearchBar" destination="nFR-zM-kPp" id="Us8-2v-pvv"/>
                         <outlet property="marvelCharactersCollectionView" destination="jXL-NA-NiV" id="5ul-V9-eQt"/>
+                        <outlet property="messageLbl" destination="Kpm-aO-l90" id="Ul7-lM-Hwi"/>
+                        <outlet property="reloadCharsBtnOutlet" destination="l9Q-hH-9j2" id="ba1-E8-gnB"/>
+                        <outlet property="resetSearchBtn" destination="JYx-hg-lX0" id="nvh-Jm-By5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

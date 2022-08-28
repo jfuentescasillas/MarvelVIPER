@@ -65,7 +65,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		guard let cell = characterDetailsTableView.dequeueReusableCell(withIdentifier: "characterBibliographyCell", for: indexPath) as? CharacterBibliographyTableViewCell else { return UITableViewCell() }
 		
 		let viewModelSection = indexPath.section
-		//print("viewModelSection: \(viewModelSection)")
 		
 		switch viewModelSection {
 		case 0:  // Character's Image Section
@@ -85,12 +84,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 2:  // Character's Comics Section
 			guard let comics = viewModel.characterComics else { return UITableViewCell() }
 			
-			if comics.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharComics
-			} else {
-				cell.textLabel?.text = comics[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: comics, indexPath: indexPath)
 						
 			return cell
@@ -98,12 +91,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 3:  // Character's Series Section
 			guard let series = viewModel.characterSeries  else { return UITableViewCell() }
 									
-			if series.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharSeries
-			} else {
-				cell.textLabel?.text = series[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: series, indexPath: indexPath)
 						
 			return cell
@@ -111,12 +98,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 4:  // Character's Stories Section
 			guard let stories = viewModel.characterStories  else { return UITableViewCell() }
 									
-			if stories.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharStories
-			} else {
-				cell.textLabel?.text = stories[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: stories, indexPath: indexPath)
 						
 			return cell
@@ -124,12 +105,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 5:  // Character's Events Section
 			guard let events = viewModel.characterEvents  else { return UITableViewCell() }
 									
-			if events.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharStories
-			} else {
-				cell.textLabel?.text = events[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: events, indexPath: indexPath)
 						
 			return cell

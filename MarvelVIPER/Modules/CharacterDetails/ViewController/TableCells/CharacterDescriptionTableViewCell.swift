@@ -7,6 +7,12 @@
 
 import UIKit
 
+
+protocol CharacterDescriptionTableViewCellProtocol {
+	func configureDescriptionCell(with viewModel: CharacterDetailsViewModel)
+}
+
+
 class CharacterDescriptionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()		
@@ -18,9 +24,12 @@ class CharacterDescriptionTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-	
-	
-	public func configureDescriptionCell(with viewModel: CharacterDetailsViewModel) {
+}
+
+
+// MARK: - Extension. Conforms to CharacterDescriptionTableViewCellProtocol
+extension CharacterDescriptionTableViewCell: CharacterDescriptionTableViewCellProtocol {
+	func configureDescriptionCell(with viewModel: CharacterDetailsViewModel) {
 		if viewModel.characterDescription != "" {
 			textLabel?.text = viewModel.characterDescription
 		} else {

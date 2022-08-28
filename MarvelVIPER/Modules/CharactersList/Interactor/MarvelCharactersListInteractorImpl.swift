@@ -29,7 +29,7 @@ extension MarvelCharactersListInteractorImpl: MarvelCharactersListInteractorProt
 				success(response.data.results)
 				
 			case .failure(let error):
-				failure(error)
+				failure(error)				
 			}
 		}
 	}

@@ -56,7 +56,22 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 						
 			self?.viewController?.stopAndHideActivity()
 		}, failure: { errorApi in
-			print(errorApi?.localizedDescription ?? "Problems fetching the Marvel Characters")
+			guard let errorString = errorApi?.localizedDescription else { return }
+			
+			let errorInt: Int = Int(errorString) ?? -100
+			
+			switch errorInt {
+			case (400...499):
+				self.viewController?.showClientRequestErrorMsg()
+				
+			case (500...599):
+				self.viewController?.showServerErrorMsg()
+				
+			default:
+				self.viewController?.showNoInternetMsg()
+			}
+			
+			print("errorApi?.localizedDescription fetching chars: \(errorApi?.localizedDescription ?? "Error fetching chars")")			
 		})
 	}
 	
@@ -94,7 +109,8 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 				
 				self?.viewController?.stopAndHideActivity()
 			}, failure: { errorApi in
-				print(errorApi?.localizedDescription ?? "Problems fetching more Marvel Characters (could not use pagination)")
+				print("errorApi?.localizedDescription fetching MORE chars: \(errorApi?.localizedDescription ?? "Error fetching MORE chars")" )
+				self.viewController?.showNoInternetMsg()
 			})
 		} else {
 			//interactor?.searchCharacters(charactersName: searchedName, pageOffset: pageOffset)

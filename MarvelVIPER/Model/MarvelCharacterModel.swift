@@ -77,11 +77,15 @@ extension MarvelResults {
 	}
 	
 	var toCollectionCellViewModel: CharacterCollectionViewCellViewModel {
-		return CharacterCollectionViewCellViewModel(characterImageURL: imageURL, characterName: name, characterDescription: description)
+		return CharacterCollectionViewCellViewModel(characterImageURL: imageURL, characterName: name,
+													characterDescription: description)
 	}
 	
 	
 	var toDetailsCellViewModel: CharacterDetailsViewModel {
-		return CharacterDetailsViewModel(characterName: name, characterImageURL: imageURL, characterDescription: description, characterComics: comics.items, characterSeries: series.items, characterStories: stories.items, characterEvents: events.items)
+		return CharacterDetailsViewModel(characterName: name, characterImageURL: imageURL,
+										 characterDescription: description, characterComics: comics.items,
+										 characterSeries: series.items, characterStories: stories.items,
+										 characterEvents: events.items)
 	}
 }

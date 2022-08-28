@@ -7,8 +7,14 @@
 
 import UIKit
 
+
+protocol CharacterImageTableViewCellProtocol {
+	func configureImgCell(with viewModel: CharacterDetailsViewModel)
+}
+
+
 class CharacterImageTableViewCell: UITableViewCell {
-	@IBOutlet weak var characterImgView: UIImageView!
+	@IBOutlet private weak var characterImgView: UIImageView!
 	
 
     override func awakeFromNib() {
@@ -22,8 +28,11 @@ class CharacterImageTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+}
 
-	
+
+// MARK: - Extension. Conforms to CharacterImageTableViewCellProtocol
+extension CharacterImageTableViewCell: CharacterImageTableViewCellProtocol {
 	public func configureImgCell(with viewModel: CharacterDetailsViewModel) {
 		characterImgView.image = UIImage(systemName: "person.circle.fill")
 		

@@ -28,6 +28,7 @@ class MarvelCharactersListProviderImpl: MarvelCharactersListProviderProtocol {
 		let request = RequestDTO(params: nil,
 								 method: .get,
 								 endpoint: charactersListEndpoint)
+		
 		provider.requestGeneric(requestDto: request, entityClass: MarvelCharacterModel.self)
 			.sink { [weak self] (completion) in
 				guard self != nil else { return }

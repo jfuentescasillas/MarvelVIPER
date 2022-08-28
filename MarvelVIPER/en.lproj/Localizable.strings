@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  MarvelVIPER
+
+  Created by Jorge Fuentes Casillas on 31/07/22.
+  
+*/
+
+
+// MARK: - MarvelCharactersListViewController
+// ViewController
+"charsResetButtonTitle"		 			= "Reset";
+"charsSearchBarPlaceholder" 			= "Search for a character...";
+"charsSearchBarInvalidTextInputTitle" 	= "Invalid text input";
+"charsSearchBarInvalidTextInputMessage" = "Only alphanumeric characters are allowed in the search bar. Please try another search with valid characters";
+"emptyResultsLabelNoResults"		    = "There were no results for the character you requested. Please try with another name.";
+"reloadCharsButtonTitle"		 		= "Reload Characters";
+
+// Alert controller messages in MarvelCharactersListViewController
+"alertControllerInvalidTextInputTitle" = "Invalid Text Input";
+"alertControllerInvalidTextInputMsg"   = "Your search can only contain numbers, letters and/or blank spaces, please try again with a valid format.";
+"retryBtnTitle"   = "Retry";
+"cancelBtnTitle"  = "Cancel";
+
+// No internet connection
+"noInternetTitle" = "No internet connection";
+"noInternetMsg"   = "Your device is not connected to the internet, please try again later.";
+
+// Bad request (client error)
+"badRequestMsg" = "There was a problem while sending the request to the server to get a list of characters. Please try again later.";
+
+"alertControllerBadRequestTitle" = "Bad Request";
+"alertControllerBadRequestMsg" = "There were problems requesting data to server.";
+
+// Server response error messages
+"badResponseMsg" = "There was a problem while receiving data from the server. Please try again later.";
+
+"alertControllerBadResponseTitle" = "Bad Response";
+"alertControllerBadResponseMsg" = "There were problems receiving data from the server.";

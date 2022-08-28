@@ -41,21 +41,22 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 		viewController?.startActivity()
 		
 		interactor?.fetchDetailsFromRequestedApi(withID: charID, success: { [weak self] characterDetails in
-			guard self != nil else { return }
+			//guard self != nil else { return }
+			guard let self = self else { return }
 			guard let charDetails = characterDetails else { return }
 			
-			self?.resultsViewModel = charDetails
+			self.resultsViewModel = charDetails
 			
-			self?.numComics  = self?.resultsViewModel[0]?.comics.items.count
-			self?.numSeries  = self?.resultsViewModel[0]?.series.items.count
-			self?.numStories = self?.resultsViewModel[0]?.stories.items.count
-			self?.numEvents  = self?.resultsViewModel[0]?.events.items.count
+			self.numComics  = self.resultsViewModel[0]?.comics.items.count
+			self.numSeries  = self.resultsViewModel[0]?.series.items.count
+			self.numStories = self.resultsViewModel[0]?.stories.items.count
+			self.numEvents  = self.resultsViewModel[0]?.events.items.count
 			
-			self?.isViewModelLoaded = true
+			self.isViewModelLoaded = true
 			
-			self?.viewController?.title = self?.resultsViewModel[0]?.name
-			self?.viewController?.stopAndHideActivity()
-			self?.viewController?.reloadTableView()
+			self.viewController?.title = self.resultsViewModel[0]?.name
+			self.viewController?.stopAndHideActivity()
+			self.viewController?.reloadTableView()
 			
 		}, failure: { (error) in
 			print(error?.localizedDescription ?? "Error fetching the Character's Details from Api")

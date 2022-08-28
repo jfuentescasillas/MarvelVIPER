@@ -11,14 +11,19 @@ import Foundation
 
 // MARK: - Error Manager
 enum ApiError: Error, LocalizedError {
-	case unknownError, apiError(reason: String)
+	case unknownError
+	case serverError(reason: String)
+	case internalError(reason: String)
+	case apiError(reason: String)
 	
 	var errorDescription: String? {
 		switch self {
 		case .unknownError:
 			return "Unknown Error"
 			
-		case .apiError(let error):
+		case .serverError(let error),
+			 .internalError(let error),
+			 .apiError(let error):
 			return error
 		}
 	}
