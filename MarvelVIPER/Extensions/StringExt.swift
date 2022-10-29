@@ -15,7 +15,7 @@ extension String {
 	public var isAlphanumeric: Bool {
 		guard !isEmpty else { return false }
 		
-		let allowed = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+		let allowed = "-abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890()'. "
 		let characterSet = CharacterSet(charactersIn: allowed)
 		
 		guard rangeOfCharacter(from: characterSet.inverted) == nil else { return false }

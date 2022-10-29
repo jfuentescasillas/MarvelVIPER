@@ -11,6 +11,7 @@ import Foundation
 
 protocol MarvelCharactersListInteractorProtocol {
 	func fetchCharactersFromAPIBusiness(pageOffset: Int, success: @escaping([MarvelResults]?) -> (), failure: @escaping(ApiError?) -> ())
+	func searchCharacter(characterName: String, pageOffset: Int, success: @escaping([MarvelResults]?) -> (), failure: @escaping(ApiError?) -> ())
 }
 
 
@@ -30,6 +31,21 @@ extension MarvelCharactersListInteractorImpl: MarvelCharactersListInteractorProt
 				
 			case .failure(let error):
 				failure(error)				
+			}
+		}
+	}
+	
+	
+	internal func searchCharacter(characterName: String, pageOffset: Int, success: @escaping([MarvelResults]?) -> (), failure: @escaping(ApiError?) -> ()) {
+		provider.fetchCharacterSearch(characterName: characterName, pageOffset: pageOffset) { [weak self] (resultOfSearch) in
+			guard self != nil else { return }
+			  
+			switch resultOfSearch {
+			case .success(let response):
+				success(response.data.results)
+				
+			case .failure(let error):
+				failure(error)
 			}
 		}
 	}

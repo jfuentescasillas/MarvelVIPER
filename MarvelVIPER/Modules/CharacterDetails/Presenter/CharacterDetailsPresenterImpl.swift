@@ -12,8 +12,6 @@ protocol CharacterDetailsPresenterProtocol {
 	func fetchCharacterDetailsFromAPI()
 	func cellViewModel(at indexPath: IndexPath) -> CharacterDetailsViewModel
 	func numberOfItemsInSection(inSection: Int) -> Int?
-		
-	//func didselectItem(at indexPath: IndexPath)
 }
 
 
@@ -41,7 +39,6 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 		viewController?.startActivity()
 		
 		interactor?.fetchDetailsFromRequestedApi(withID: charID, success: { [weak self] characterDetails in
-			//guard self != nil else { return }
 			guard let self = self else { return }
 			guard let charDetails = characterDetails else { return }
 			
@@ -70,33 +67,23 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 			return resultsViewModel.count
 			
 		case 2:  // Section 2: Character's comics
-			if numComics == 0 && isViewModelLoaded {
+			return numComics == 0 && isViewModelLoaded ? 1 : numComics
+			/* The terniary operator above does the same as the next if-else statement
+			 if numComics == 0 && isViewModelLoaded {
 				return 1
 			} else {
 				return numComics
-			}
+			}*/
 						
 		case 3:  // Section 3: Character's series
-			if numSeries == 0 && isViewModelLoaded {
-				return 1
-			} else {
-				return numSeries
-			}
-			
+			return numSeries == 0 && isViewModelLoaded ? 1 : numSeries
+						
 		case 4:  // Section 4: Character's stories
-			if numStories == 0 && isViewModelLoaded {
-				return 1
-			} else {
-				return numStories
-			}
-			
+			return numStories == 0 && isViewModelLoaded ? 1 : numStories
+						
 		case 5:  // Section 5: Character's events
-			if numEvents == 0 && isViewModelLoaded {
-				return 1
-			} else {
-				return numEvents
-			}
-			
+			return numEvents == 0 && isViewModelLoaded ? 1 : numEvents
+						
 		default:
 			return 0
 		}
@@ -104,7 +91,6 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 	
 
 	func cellViewModel(at indexPath: IndexPath) -> CharacterDetailsViewModel {
-		//print("resultsViewModel (inside cellViewModel in CharacterDetailsPresenterImpl):\n \(resultsViewModel)")
 		return resultsViewModel[0]!.toDetailsCellViewModel
 	}
 }

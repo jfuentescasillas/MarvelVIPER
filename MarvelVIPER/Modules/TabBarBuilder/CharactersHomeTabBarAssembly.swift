@@ -15,8 +15,8 @@ final public class CharactersHomeTabBarAssembly {
 		let oneVC = MarvelCollectionAssembly.marvelCharactersNavigationController()
 		let twoVC = SecondViewAssembly.secondViewNavigationController() //MarvelCollectionAssembly.marvelCharactersNavigationController()
 		
-		let oneCustomTabBarItem = UITabBarItem(title: "Characters", image: UIImage(systemName: "person.3"), tag: 0)
-		let twoCustomTabBarItem = UITabBarItem(title: "Others", image: UIImage(systemName: "star"), tag: 1)
+		let oneCustomTabBarItem = UITabBarItem(title: "charactersTabBarItem".localized, image: UIImage(systemName: "person.3"), tag: 0)
+		let twoCustomTabBarItem = UITabBarItem(title: "favoritesTabBarItem".localized, image: UIImage(systemName: "star"), tag: 1)
 		
 		oneVC.tabBarItem = oneCustomTabBarItem
 		twoVC.tabBarItem = twoCustomTabBarItem

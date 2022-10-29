@@ -124,7 +124,24 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 	}
 	
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch section {
+		case 0, 1:
+			return ""
+			
+		default:
+				return constantStrings.kCharDetailsSectionTitles[section]
+		}
+	}
+	
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+	
+	
+	// Customize header in each section
+	/*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let view = UIView()
 		let label = UILabel()
 		
@@ -135,14 +152,14 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 			view.addSubview(label)
 			
 		default:
-			label.text = constantStrings.kCharDetailsSectionTitles[section]
+			//label.text = constantStrings.kCharDetailsSectionTitles[section]
 			label.backgroundColor = UIColor.lightGray
 			label.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30)
 			view.addSubview(label)
 		}
 		
 		return view
-	}
+	}*/
 }
 
 

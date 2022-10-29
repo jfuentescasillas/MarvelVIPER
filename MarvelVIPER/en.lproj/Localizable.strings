@@ -8,12 +8,17 @@
 
 
 // MARK: - MarvelCharactersListViewController
-// ViewController
+// MARK: Tab Bar Items
+"charactersTabBarItem" = "Characters";
+"favoritesTabBarItem" = "Favorites";
+
+// MARK: Character's list ViewController
+"marvelCharactersVCTitle"				= "Marvel Characters";
 "charsResetButtonTitle"		 			= "Reset";
 "charsSearchBarPlaceholder" 			= "Search for a character...";
 "charsSearchBarInvalidTextInputTitle" 	= "Invalid text input";
 "charsSearchBarInvalidTextInputMessage" = "Only alphanumeric characters are allowed in the search bar. Please try another search with valid characters";
-"emptyResultsLabelNoResults"		    = "There were no results for the character you requested. Please try with another name.";
+"emptySearchResultsLabel"			    = "There were no results for the character you requested. Please try with another name.";
 "reloadCharsButtonTitle"		 		= "Reload Characters";
 
 // Alert controller messages in MarvelCharactersListViewController
@@ -37,3 +42,7 @@
 
 "alertControllerBadResponseTitle" = "Bad Response";
 "alertControllerBadResponseMsg" = "There were problems receiving data from the server.";
+
+
+// MARK: - Favorites list ViewController
+"favoriteCharactersVCTitle"				= "Favorite Marvel Characters";

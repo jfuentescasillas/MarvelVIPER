@@ -19,7 +19,7 @@ final public class MarvelCollectionAssembly {
 
 	static func marvelCharactersViewController() -> MarvelCharactersListViewController {
 		let vc = MarvelCharactersListViewController.createFromStoryboard()
-		vc.title = "Marvel Characters"
+		vc.title = "marvelCharactersVCTitle".localized
 		vc.presenter = marvelCharactersPresenter(viewController: vc)
 		
 		return vc

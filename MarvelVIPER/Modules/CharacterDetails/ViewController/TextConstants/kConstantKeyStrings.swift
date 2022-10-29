@@ -14,10 +14,10 @@ struct kConstantKeyStrings {
 	let kCharDetailsSectionTitles: [String] = [
 		"Character Image",
 		"Character Description",
-		" Comics",
-		" Series",
-		" Stories",
-		" Events"
+		"Comics",
+		"Series",
+		"Stories",
+		"Events"
 	]
 	let kNoCharDescription: String = "Description Not Available For This Character"
 	let kNoCharComics: String 	   = "No Comics Available For This Character"

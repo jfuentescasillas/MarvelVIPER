@@ -19,7 +19,7 @@ final public class SecondViewAssembly {
 	
 	static func secondViewController() -> SecondViewController {
 		let vc = SecondViewController.createFromStoryboard()
-		vc.title = "Second View Controller"
+		vc.title = "favoriteCharactersVCTitle".localized
 		
 		return vc
 	}
