@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CryptoKit
 
 
 protocol CharacterDetailsProviderProtocol {
@@ -18,9 +19,14 @@ class CharacterDetailsProviderImpl: CharacterDetailsProviderProtocol {
 	let provider: RequestManagerProtocol = RequestManager()
 	var cancellable = [AnyCancellable]()
 
+	// Properties needed for the generation of the timeStamp and the hashkey
+	private let timeStamp: String = String(Date().timeIntervalSince1970)
+	private var generatedHashKey: String {
+		return MD5(withData: "\(timeStamp)\(SensitiveData().prApiKey)\(SensitiveData().pbApiKey)")
+	}
 	
 	internal func fetchCharacterDetails(withID characterID: Int, completionHandler: @escaping (Result<[MarvelResults], ApiError>) -> Void) {
-		let detailsEndpoint = CharacterDetailsURLEndpoint.baseURL + "\(characterID)" + CharacterDetailsURLEndpoint.setApiKey + SensitiveData().apiKey + CharacterDetailsURLEndpoint.setTimeStamp + "\(1)" + CharacterDetailsURLEndpoint.setHashKey + SensitiveData().hashKey
+		let detailsEndpoint = CharacterDetailsURLEndpoint.baseURL + "\(characterID)" + CharacterDetailsURLEndpoint.setApiKey + SensitiveData().pbApiKey + CharacterDetailsURLEndpoint.setTimeStamp + timeStamp + CharacterDetailsURLEndpoint.setHashKey + generatedHashKey
 		let request = RequestDTO(params: nil,
 								 method: .get,
 								 endpoint: detailsEndpoint)
@@ -40,5 +46,17 @@ class CharacterDetailsProviderImpl: CharacterDetailsProviderProtocol {
 			
 			completionHandler(.success(marvelResults.data.results))
 		}.store(in: &cancellable)
+	}
+	
+	
+	// MARK: - To create the hash, CryptoKit is used.
+	private func MD5(withData: String) -> String {
+		let dataToHash = Insecure.MD5.hash(data: withData.data(using: .utf8) ?? Data())
+		let hashMapped =  dataToHash.map {
+			String(format: "%02hhx", $0)
+		}
+		.joined()
+		
+		return hashMapped
 	}
 }

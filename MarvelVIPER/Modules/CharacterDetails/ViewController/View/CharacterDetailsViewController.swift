@@ -65,7 +65,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		guard let cell = characterDetailsTableView.dequeueReusableCell(withIdentifier: "characterBibliographyCell", for: indexPath) as? CharacterBibliographyTableViewCell else { return UITableViewCell() }
 		
 		let viewModelSection = indexPath.section
-		//print("viewModelSection: \(viewModelSection)")
 		
 		switch viewModelSection {
 		case 0:  // Character's Image Section
@@ -85,12 +84,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 2:  // Character's Comics Section
 			guard let comics = viewModel.characterComics else { return UITableViewCell() }
 			
-			if comics.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharComics
-			} else {
-				cell.textLabel?.text = comics[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: comics, indexPath: indexPath)
 						
 			return cell
@@ -98,12 +91,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 3:  // Character's Series Section
 			guard let series = viewModel.characterSeries  else { return UITableViewCell() }
 									
-			if series.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharSeries
-			} else {
-				cell.textLabel?.text = series[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: series, indexPath: indexPath)
 						
 			return cell
@@ -111,12 +98,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 4:  // Character's Stories Section
 			guard let stories = viewModel.characterStories  else { return UITableViewCell() }
 									
-			if stories.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharStories
-			} else {
-				cell.textLabel?.text = stories[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: stories, indexPath: indexPath)
 						
 			return cell
@@ -124,12 +105,6 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 		case 5:  // Character's Events Section
 			guard let events = viewModel.characterEvents  else { return UITableViewCell() }
 									
-			if events.isEmpty {
-				cell.textLabel?.text = kConstantKeyStrings().kNoCharStories
-			} else {
-				cell.textLabel?.text = events[indexPath.row].name
-			}
-			
 			cell.configureBibliographyCell(with: events, indexPath: indexPath)
 						
 			return cell
@@ -149,7 +124,24 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 	}
 	
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch section {
+		case 0, 1:
+			return ""
+			
+		default:
+				return constantStrings.kCharDetailsSectionTitles[section]
+		}
+	}
+	
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+	
+	
+	// Customize header in each section
+	/*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let view = UIView()
 		let label = UILabel()
 		
@@ -160,14 +152,14 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 			view.addSubview(label)
 			
 		default:
-			label.text = constantStrings.kCharDetailsSectionTitles[section]
+			//label.text = constantStrings.kCharDetailsSectionTitles[section]
 			label.backgroundColor = UIColor.lightGray
 			label.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30)
 			view.addSubview(label)
 		}
 		
 		return view
-	}
+	}*/
 }
 
 

@@ -11,14 +11,19 @@ import Foundation
 
 // MARK: - Error Manager
 enum ApiError: Error, LocalizedError {
-	case unknownError, apiError(reason: String)
+	case unknownError
+	case serverError(reason: String)
+	case internalError(reason: String)
+	case apiError(reason: String)
 	
 	var errorDescription: String? {
 		switch self {
 		case .unknownError:
 			return "Unknown Error"
 			
-		case .apiError(let error):
+		case .serverError(let error),
+			 .internalError(let error),
+			 .apiError(let error):
 			return error
 		}
 	}
@@ -72,6 +77,3 @@ struct CharacterDetailsURLEndpoint {
 	static let setTimeStamp: String	  = "&ts=" 	  	// link it to the timestamp. Example: &ts=1
 	static let setHashKey: String	  = "&hash="  	// link it to the generated hashKey
 }
-
-
-// https://gateway.marvel.com/v1/public/characters/1010853?apikey=b5a004aac50e22dbccea83b58947bf97&ts=1&hash=cf8530437ab0e239d120f70010f33a34

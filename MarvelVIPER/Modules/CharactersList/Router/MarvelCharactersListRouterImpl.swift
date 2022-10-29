@@ -27,7 +27,6 @@ extension MarvelCharactersListRouterImpl: MarvelCharactersListRouterProtocol {
 			navigationController.pushViewController(vc, animated: true)
 		} else {
 			viewController?.present(vc, animated: true)
-		}
-		
+		}		
 	}
 }

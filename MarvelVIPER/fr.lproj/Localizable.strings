@@ -1,0 +1,48 @@
+/* 
+  Localizable.strings
+  MarvelVIPER
+
+  Created by Jorge Fuentes Casillas on 31/07/22.
+  
+*/
+
+
+// MARK: - MarvelCharactersListViewController
+// MARK: Tab Bar Items
+"charactersTabBarItem" = "Personnages";
+"favoritesTabBarItem" = "Favoris";
+
+// MARK: Character's list ViewController
+"marvelCharactersVCTitle"				= "Personnages Marvel";
+"charsResetButtonTitle"		 			= "Effacer";
+"charsSearchBarPlaceholder" 			= "Rechercher un personnage...";
+"charsSearchBarInvalidTextInputTitle" 	= "Texte Invalide";
+"charsSearchBarInvalidTextInputMessage" = "Seuls les caractères alphanumériques sont autorisés dans la barre de recherche. Veuillez essayer une autre recherche avec des caractères valides";
+"emptySearchResultsLabel"			    = "Il n'y a pas de résultats pour le personnage que vous avez demandé. Veuillez essayer avec un autre nom.";
+"reloadCharsButtonTitle"		 		= "Recharger Personnages";
+
+// Alert controller messages in MarvelCharactersListViewController
+"alertControllerInvalidTextInputTitle" = "Texte Invalide";
+"alertControllerInvalidTextInputMsg"   = "Votre recherche ne peut contenir que des chiffres, des lettres et/ou des espaces vides, veuillez réessayer avec un format valide.";
+"retryBtnTitle"   = "Réessayer";
+"cancelBtnTitle"  = "Annuler";
+
+// No internet connection
+"noInternetTitle" = "Sans connection internet";
+"noInternetMsg"   = "Pas de connexion internet. Veuillez réessayer plus tard.";
+
+// Bad request (client error)
+"badRequestMsg" = "Il y a eu un problème en demandant la liste de personnages. Veuillez réessayer plus tard.";
+
+"alertControllerBadRequestTitle" = "Mauvaise Requête";
+"alertControllerBadRequestMsg" = "Il y a eu des problèmes pour demander des données au serveur.";
+
+// Server response error messages
+"badResponseMsg" = "Il y a eu un problème pour recevoir des données du serveur. Veuillez réessayer plus tard.";
+
+"alertControllerBadResponseTitle" = "Mauvaise Réponse";
+"alertControllerBadResponseMsg" = "Il y a eu des problèmes pour recevoir des données du serveur.";
+
+
+// MARK: - Favorites list ViewController
+"favoriteCharactersVCTitle"				= "Personnages Marvel Favoris";
