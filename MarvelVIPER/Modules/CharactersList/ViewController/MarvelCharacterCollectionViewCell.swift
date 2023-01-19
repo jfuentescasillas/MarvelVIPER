@@ -28,6 +28,7 @@ class MarvelCharacterCollectionViewCell: UICollectionViewCell {
 		// In case that the placeholder is wanted to be configured from the UIImageViewExt file, comment this line of code (beerImage.image = UIImage(named: "beerPlaceholder-60x60")) and uncomment the lines in the extension file (UIImageViewExt)
 		// Placeholder image
 		characterImageView.image = UIImage(systemName: "person.circle.fill") //(named: "beerCollectionImagePlaceholder")
+		
 		guard let characterImgURL = viewModel.characterImageURL else { return }
 		
 		characterImageView.downloaded(from: characterImgURL)

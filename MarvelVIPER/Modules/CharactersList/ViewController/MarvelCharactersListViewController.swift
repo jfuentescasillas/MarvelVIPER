@@ -17,7 +17,7 @@ protocol MarvelCharactersListViewProtocol {
 	func showClientRequestErrorMsg()
 	func showServerErrorMsg()
 	func showEmptySearchResult()
-	func scrollToBottom(atIndex: Int)
+	func scrollToBottom(atIndex: Int, isUsingPagination: Bool)
 	func noMoreCharactersAvailable()
 	func reactivateHasMoreCharacters()
 }
@@ -131,10 +131,17 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	}
 	
 	
-	// Scrolls to the last element in the collection view after the "Reset" button is clicked.
-	func scrollToBottom(atIndex: Int) {
+	// Scrolls to the last element +2 in the collection view after the pagination or to the last element -1 when the "Reset" button is clicked (after making a character search).
+	func scrollToBottom(atIndex: Int, isUsingPagination: Bool) {
 		DispatchQueue.main.async {
-			let index = IndexPath(item: atIndex-1, section: 0)
+			var index: IndexPath!
+			
+			if isUsingPagination {
+				index = IndexPath(item: atIndex+1, section: 0)
+			} else { // Reset button was pressed
+				index = IndexPath(item: atIndex-1, section: 0)
+			}
+			
 			self.marvelCharactersCollectionView?.scrollToItem(at: index, at: .bottom, animated: true)
 			self.marvelCharactersCollectionView.isHidden = false
 			
@@ -251,7 +258,7 @@ extension MarvelCharactersListViewController: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let viewModel = presenter?.cellViewModel(at: indexPath),
-			  let cell = marvelCharactersCollectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as? MarvelCharacterCollectionViewCell else { return UICollectionViewCell() }
+			  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as? MarvelCharacterCollectionViewCell else { return UICollectionViewCell() }
 		
 		cell.configure(with: viewModel)
 		
