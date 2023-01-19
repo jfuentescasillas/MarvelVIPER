@@ -33,13 +33,13 @@ class MarvelCharactersListPresenterImpl: BasePresenter<MarvelCharactersListViewC
 	// View Model Properties
 	private var viewModel = [MarvelResults]() {
 		didSet {
-			self.viewController?.reloadCollectionViewData()
+			viewController?.reloadCollectionViewData()
 		}
 	}
 	
 	private var viewModelAux = [MarvelResults]() {
 		didSet {
-			self.viewController?.reloadCollectionViewData()
+			viewController?.reloadCollectionViewData()
 		}
 	}
 	
@@ -209,10 +209,9 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 				}
 				
 				self.fetchedCharacters = resultArray.count
-				
 				self.isLoadingMoreCharacters = false
-				
 				self.viewController?.stopAndHideActivity()
+				self.viewController?.scrollToBottom(atIndex: self.pageOffset, isUsingPagination: true)
 			}, failure: { errorApi in
 				print("errorApi?.localizedDescription fetching MORE chars: \(errorApi?.localizedDescription ?? "Error fetching MORE chars")" )
 				self.viewController?.showNoInternetMsg()
@@ -245,7 +244,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 		pageOffset = pageOffsetAux
 		viewModel = viewModelAux
 		
-		viewController?.scrollToBottom(atIndex: viewModel.count)
+		viewController?.scrollToBottom(atIndex: viewModel.count, isUsingPagination: false)
 		viewController?.reactivateHasMoreCharacters()
 	}
 	
