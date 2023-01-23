@@ -72,8 +72,8 @@ struct MarvelItems: Codable {
 
 // Extension: Different computed properties for different purposes
 extension MarvelResults {
-	var imageURL: URL? {
-		return URL(string: "\(thumbnail.path).\(thumbnail.imageExtension)")
+	var imageURL: String? {
+		return "\(thumbnail.path).\(thumbnail.imageExtension)"
 	}
 	
 	var toCollectionCellViewModel: CharacterCollectionViewCellViewModel {

@@ -37,7 +37,7 @@ extension CharacterImageTableViewCell: CharacterImageTableViewCellProtocol {
 		characterImgView.image = UIImage(systemName: "person.circle.fill")
 		
 		guard let characterImgURL = viewModel.characterImageURL else { return }
-		
-		characterImgView.downloaded(from: characterImgURL)
+				
+		characterImgView.downloaded(from: URL(string: characterImgURL)!)
 	}
 }

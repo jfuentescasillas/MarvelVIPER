@@ -10,7 +10,7 @@ import UIKit
 
 
 struct CharacterCollectionViewCellViewModel {
-	let characterImageURL: URL?
+	let characterImageURL: String?
 	let characterName: String?
 	let characterDescription: String?
 }
@@ -31,7 +31,7 @@ class MarvelCharacterCollectionViewCell: UICollectionViewCell {
 		
 		guard let characterImgURL = viewModel.characterImageURL else { return }
 		
-		characterImageView.downloaded(from: characterImgURL)
+		characterImageView.downloaded(from: URL(string: characterImgURL)!)
 		characterNameLbl.text = viewModel.characterName
 		
 		if viewModel.characterDescription != "" {
