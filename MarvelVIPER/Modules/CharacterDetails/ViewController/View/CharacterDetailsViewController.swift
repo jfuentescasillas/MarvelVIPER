@@ -11,7 +11,7 @@ import UIKit
 // MARK: - CharacterDetailsViewModel
 struct CharacterDetailsViewModel {
 	let characterName: String?
-	let characterImageURL: URL?
+	let characterImageURL: String?
 	let characterDescription: String?
 	let characterComics: [MarvelItems]?
 	let characterSeries: [MarvelItems]?

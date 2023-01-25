@@ -24,9 +24,9 @@ fileprivate let imageCache = NSCache<NSString, UIImage>()
 
 
 extension UIImageView {
-	func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-		contentMode = mode
-		imageUrlString = "\(url)"
+	// Version 1. Original code
+	func downloaded(from url: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+		imageUrlString = url
 		//image = avatarPlaceholder
 		
 		if let imageFromCache = imageCache.object(forKey: "\(url)" as NSString) {
@@ -35,22 +35,21 @@ extension UIImageView {
 			return
 		}
 		
-		let imageTask = URLSession.shared.dataTask(with: url) { data, response, error in
+		let imageTask = URLSession.shared.dataTask(with: URL(string: url)!) { data, response, error in
 			guard
 				let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
 				let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
 				let data = data, error == nil,
 				let image = UIImage(data: data)  // This is when the image is loaded for the 1st time
-				else { return }
+			else { return }
 			
 			DispatchQueue.main.async() { [weak self] in
-				guard let imageToCache = UIImage(data: data) else { return }
+				guard let self = self,
+					  let imageToCache = UIImage(data: data)
+				else { return }
 				
-				if imageUrlString == "\(url)" {
-					self?.image = imageToCache
-				}
-								
-				self?.image = image // Loading image for the 1st time
+				self.image = image // Loading image for the 1st time
+				
 				imageCache.setObject(imageToCache, forKey: "\(url)" as NSString) // Image is stored in cache and this will help to prevent the "reuse" of cells, which will help to avoid to show an incorrect image for a determined item.
 			}
 		}
@@ -59,10 +58,92 @@ extension UIImageView {
 	}
 	
 	
-	/*func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-		guard let url = URL(string: link) else { return }
+	// Version 2. Youtube code https://www.youtube.com/watch?v=6smmGjep75s. Works fine and does the same as Version 1.
+	/*func downloaded(from url: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+		if let image = imageCache.object(forKey: url as NSString) {
+			self.image = image
+			
+			return
+		}
 		
-		downloaded(from: url, contentMode: mode)
+		guard let stringToURL = URL(string: url) else { return }
+		
+		contentMode = mode
+		
+		DispatchQueue.global().async { [weak self] in
+			guard let self = self else { return }
+			
+			if let data = try? Data(contentsOf: stringToURL) {
+				if let image = UIImage(data: data) {
+					DispatchQueue.main.async {
+						imageCache.setObject(image, forKey: url as NSString)
+						self.image = image
+					}
+				}
+			}
+		}
+	}*/
+	
+	
+	// Version 3. Based on GHFollowers app
+	/*func downloaded(from url: String, contentMode mode: UIView.ContentMode = .scaleAspectFit, completed: @escaping(UIImage?) -> Void) {
+		let cacheKey = NSString(string: url)
+		
+		// Store downloaded image in cache
+		if let image = imageCache.object(forKey: cacheKey) {
+			completed(image)
+			
+			return
+		}
+		
+		guard let stringToURL = URL(string: url) else {
+			completed(nil)
+			
+			return
+		}
+		
+		let task = URLSession.shared.dataTask(with: stringToURL) { [weak self] data, response, error in
+			guard self != nil, error == nil,
+				  let response = response as? HTTPURLResponse, response.statusCode == 200,
+				  let data = data,
+				  let image = UIImage(data: data) else {
+				completed(nil)
+				
+				return
+			}
+			
+			imageCache.setObject(image, forKey: cacheKey)
+			
+			completed(image)
+		}
+		
+		task.resume()
+	}*/
+		
+	
+	// Version 3.1. Based on another version of GHFollowers app. Works fine and does the same as Version 1 and 2.
+	/*func downloaded(from url: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) async -> UIImage? {
+		let cacheKey = NSString(string: url)
+		contentMode = mode
+				
+		if let image = imageCache.object(forKey: cacheKey) {
+			return image
+		}
+		
+		guard let stringToURL = URL(string: url) else { return nil }
+		
+		do {
+			let (data, _) = try await URLSession.shared.data(from: stringToURL)
+			
+			guard let image = UIImage(data: data) else { return nil }
+			
+			// Store downloaded image in cache
+			imageCache.setObject(image, forKey: cacheKey)
+			
+			return image
+		} catch {
+			return nil
+		}
 	}*/
 }
 
