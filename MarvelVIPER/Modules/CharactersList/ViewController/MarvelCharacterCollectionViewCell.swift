@@ -18,6 +18,9 @@ struct CharacterCollectionViewCellViewModel {
 
 
 class MarvelCharacterCollectionViewCell: UICollectionViewCell {
+	// MARK: - Properties
+	let placeholderImg = UIImage(systemName: "person.circle.fill")
+	
 	// MARK: - Elements in Cell
 	@IBOutlet weak var characterImageView: UIImageView!
 	@IBOutlet weak var characterNameLbl: UILabel!
@@ -27,11 +30,27 @@ class MarvelCharacterCollectionViewCell: UICollectionViewCell {
 	func configure(with viewModel: CharacterCollectionViewCellViewModel) {
 		// In case that the placeholder is wanted to be configured from the UIImageViewExt file, comment this line of code (beerImage.image = UIImage(named: "beerPlaceholder-60x60")) and uncomment the lines in the extension file (UIImageViewExt)
 		// Placeholder image
-		characterImageView.image = UIImage(systemName: "person.circle.fill") //(named: "beerCollectionImagePlaceholder")
+		characterImageView.image = placeholderImg
 		
 		guard let characterImgURL = viewModel.characterImageURL else { return }
 		
-		characterImageView.downloaded(from: URL(string: characterImgURL)!)
+		// Version 1. Original code and Version 2
+		characterImageView.downloaded(from: characterImgURL)
+				
+		// Version 3
+		/*characterImageView.downloaded(from: characterImgURL) { [weak self] img in
+			guard let self = self else { return }
+			
+			DispatchQueue.main.async {
+				self.characterImageView.image = img
+			}
+		}*/
+		
+		// Version 3.1
+		/*Task {
+			characterImageView.image = await characterImageView.downloaded(from: characterImgURL)
+		}*/
+		
 		characterNameLbl.text = viewModel.characterName
 		
 		if viewModel.characterDescription != "" {

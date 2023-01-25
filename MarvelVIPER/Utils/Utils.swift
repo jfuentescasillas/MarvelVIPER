@@ -62,7 +62,7 @@ struct RequestDTO {
 // See SensitiveData.swift to see the construction of a URL to get 100 MarvelCharacters
 struct URLEndpoint {
 	static let baseURL: String 		  = "https://gateway.marvel.com/v1/public/characters?"
-	static let setCharsLimit: String  = "limit=100"
+	static let setCharsLimit: String  = "limit=\(NumberOfItems.totalElements)" //"limit=100"
 	static let setCharsOffset: String = "&offset="  // link it to the offset. Example: &offset=300
 	static let setTimeStamp: String	  = "&ts=" 	  	// link it to the timestamp. Example: &ts=1
 	static let setApiKey: String	  = "&apikey="  // link it to the apiKey in the SensitiveData file

@@ -19,6 +19,7 @@
 		11179AB32831181D001580C0 /* CharacterDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11179AB22831181D001580C0 /* CharacterDetailsViewController.swift */; };
 		11179AB52831182A001580C0 /* CharacterDetailsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11179AB42831182A001580C0 /* CharacterDetailsViewController.storyboard */; };
 		11179AB728311844001580C0 /* CharacterDetailsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11179AB628311844001580C0 /* CharacterDetailsAssembly.swift */; };
+		111DC5B9297EF809001C0E56 /* NumberOfItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111DC5B8297EF809001C0E56 /* NumberOfItems.swift */; };
 		112E300D28970C05000B8921 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112E300C28970C05000B8921 /* StringExt.swift */; };
 		112E301028970DD0000B8921 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 112E301228970DD0000B8921 /* Localizable.strings */; };
 		119524C62843BE6600D2EF7D /* CharacterDetailsPresenterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119524C52843BE6500D2EF7D /* CharacterDetailsPresenterImpl.swift */; };
@@ -81,6 +82,7 @@
 		11179AB22831181D001580C0 /* CharacterDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsViewController.swift; sourceTree = "<group>"; };
 		11179AB42831182A001580C0 /* CharacterDetailsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CharacterDetailsViewController.storyboard; sourceTree = "<group>"; };
 		11179AB628311844001580C0 /* CharacterDetailsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsAssembly.swift; sourceTree = "<group>"; };
+		111DC5B8297EF809001C0E56 /* NumberOfItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfItems.swift; sourceTree = "<group>"; };
 		112E300C28970C05000B8921 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		112E301128970DD0000B8921 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		112E301328970E32000B8921 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				11B94852282EA77700655D09 /* Utils.swift */,
+				111DC5B8297EF809001C0E56 /* NumberOfItems.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				119524CA2843C61C00D2EF7D /* CharacterDetailsInteractorImpl.swift in Sources */,
 				119BD300282C023F009C474B /* AppDelegate.swift in Sources */,
 				119BD342282C1FA8009C474B /* BaseVIPER.swift in Sources */,
+				111DC5B9297EF809001C0E56 /* NumberOfItems.swift in Sources */,
 				11B631FA2850B8E700BF67EE /* kConstantKeyStrings.swift in Sources */,
 				110CF6B82832422100429663 /* CharacterBibliographyTableViewCell.swift in Sources */,
 				119BD33B282C1B10009C474B /* AppAssembly.swift in Sources */,

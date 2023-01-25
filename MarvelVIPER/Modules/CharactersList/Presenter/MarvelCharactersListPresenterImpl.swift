@@ -115,7 +115,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 				
 			self.fetchedCharactersInSearch = resultOfSearch.count
 			
-			if self.fetchedCharactersInSearch < 100 {
+			if self.fetchedCharactersInSearch < NumberOfItems.totalElements { // In this case < 100
 				self.hasMoreCharactersInSearch = false
 			}
 			
@@ -181,7 +181,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 		
 		// When the last page of characters is reached, the api will fetch back less than 100 characters (which is the maximum nr. of chars. asked to the api), this means that when the fetchedCharacters is less than 100...
 		if isSearchingCharacters == false {
-			if fetchedCharacters < 100 {
+			if fetchedCharacters < NumberOfItems.totalElements { // In this case < 100
 				hasMoreCharacters = false
 				
 				viewController?.noMoreCharactersAvailable()
@@ -195,7 +195,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 			}
 			
 			isLoadingMoreCharacters = true
-			pageOffset += 100
+			pageOffset += NumberOfItems.totalElements //in this case = 100
 			
 			interactor?.fetchCharactersFromAPIBusiness(pageOffset: pageOffset, success: { [weak self] resultArray in
 				guard let self = self else { return }
@@ -217,7 +217,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 				self.viewController?.showNoInternetMsg()
 			})
 		} else {  // Case when isSearchingCharacters == true
-			if fetchedCharactersInSearch < 100 {
+			if fetchedCharactersInSearch < NumberOfItems.totalElements {  // In this case 100
 				hasMoreCharactersInSearch = false
 				
 				viewController?.noMoreCharactersAvailable()
@@ -231,7 +231,7 @@ extension MarvelCharactersListPresenterImpl: MarvelCharactersListPresenterProtoc
 			}
 			
 			isLoadingMoreCharacters = true
-			pageSearchOffsetGlobal += 100
+			pageSearchOffsetGlobal += NumberOfItems.totalElements  // Preferably 100
 		
 			fetchSearchedItems(searchedName: self.searchedName, pageSearchedOffset: pageSearchOffsetGlobal)
 		}
