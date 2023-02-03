@@ -35,14 +35,27 @@
 "badRequestMsg" = "There was a problem while sending the request to the server to get a list of characters. Please try again later.";
 
 "alertControllerBadRequestTitle" = "Bad Request";
-"alertControllerBadRequestMsg" = "There were problems requesting data to server.";
+"alertControllerBadRequestMsg"   = "There were problems requesting data to server.";
 
 // Server response error messages
 "badResponseMsg" = "There was a problem while receiving data from the server. Please try again later.";
 
 "alertControllerBadResponseTitle" = "Bad Response";
-"alertControllerBadResponseMsg" = "There were problems receiving data from the server.";
+"alertControllerBadResponseMsg"   = "There were problems receiving data from the server.";
 
 
+// ----------------------------------------------
+// MARK: Character Details
+"characterSavedSuccessfullyTitle" = "Excellent!";
+"characterSavedSuccessfullyMsg"   = "The character was successfully saved in your list of Favorite Characters!";
+
+"characterCannotBeSavedTitle"     	= "Oops!";
+"characterCannotBeSavedMsg"		 	= "This character is already in your list of Favorite Characters! Therefore, they will not be saved again in the list.";
+
+"characterSavedCommentsDefaultValue" = "Write here your observations about this character...";
+
+
+// ----------------------------------------------
 // MARK: - Favorites list ViewController
-"favoriteCharactersVCTitle"				= "Favorite Marvel Characters";
+"favoriteCharactersVCTitle"			 = "Favorite Marvel Characters";
+"characterSavedCommentsDefaultValue" = "Write here your observations about this character...";
