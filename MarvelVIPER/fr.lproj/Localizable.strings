@@ -35,14 +35,24 @@
 "badRequestMsg" = "Il y a eu un problème en demandant la liste de personnages. Veuillez réessayer plus tard.";
 
 "alertControllerBadRequestTitle" = "Mauvaise Requête";
-"alertControllerBadRequestMsg" = "Il y a eu des problèmes pour demander des données au serveur.";
+"alertControllerBadRequestMsg"   = "Il y a eu des problèmes pour demander des données au serveur.";
 
 // Server response error messages
 "badResponseMsg" = "Il y a eu un problème pour recevoir des données du serveur. Veuillez réessayer plus tard.";
 
 "alertControllerBadResponseTitle" = "Mauvaise Réponse";
-"alertControllerBadResponseMsg" = "Il y a eu des problèmes pour recevoir des données du serveur.";
+"alertControllerBadResponseMsg"   = "Il y a eu des problèmes pour recevoir des données du serveur.";
 
 
+// ----------------------------------------------
+// MARK: Character Details
+"characterSavedSuccessfullyTitle" = "Excellent!";
+"characterSavedSuccessfullyMsg"   = "Le personnage a été enregistrée avec succès dans ta liste de personnages favoris!";
+
+"characterCannotBeSavedTitle"     	= "Oh là-là!";
+"characterCannotBeSavedMsg"		 	= "Ce personnage se trouve déjà dans ta liste de favoris! Donc, il n'y sera pas réenregistrée.";
+
+// ----------------------------------------------
 // MARK: - Favorites list ViewController
-"favoriteCharactersVCTitle"				= "Personnages Marvel Favoris";
+"favoriteCharactersVCTitle"			 = "Personnages Marvel Favoris";
+"characterSavedCommentsDefaultValue" = "Écris ici tes observations sur ce personnage...";

@@ -10,13 +10,14 @@ import UIKit
 
 // MARK: - CharacterDetailsViewModel
 struct CharacterDetailsViewModel {
-	let characterName: String?
-	let characterImageURL: String?
-	let characterDescription: String?
-	let characterComics: [MarvelItems]?
-	let characterSeries: [MarvelItems]?
-	let characterStories: [MarvelItems]?
-	let characterEvents: [MarvelItems]?
+	var characterID: Int
+	var characterName: String?
+	var characterImageURL: String?
+	var characterDescription: String?
+	var characterComics: [MarvelItems]?
+	var characterSeries: [MarvelItems]?
+	var characterStories: [MarvelItems]?
+	var characterEvents: [MarvelItems]?
 }
 
 
@@ -25,6 +26,10 @@ protocol CharacterDetailsTableViewProtocol {
 	func startActivity()
 	func stopAndHideActivity()
 	func reloadTableView()
+	
+	// Success/fail message of a character saved in the favorite list
+	func showCharacterSavedSuccessfullyMsg()
+	func showCharacterCannotBeSavedMsg()
 }
 
 
@@ -32,8 +37,10 @@ protocol CharacterDetailsTableViewProtocol {
 class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresenterProtocol> {
 	// MARK: Properties
 	let constantStrings = kConstantKeyStrings()
+	private var detailsToSaveInFavoriteViewModel: CharacterDetailsViewModel?
 		
 	// MARK: Elements in Storyboard
+	@IBOutlet weak var addToFavoritesBtnOutlet: UIBarButtonItem!
 	@IBOutlet weak var characterDetailsTableView: UITableView!
 	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	
@@ -45,6 +52,15 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
 		// Do any additional setup after loading the view.
 		presenter?.fetchCharacterDetailsFromAPI()
     }
+	
+	
+	// MARK: - Action Buttons
+	@IBAction func addToFavoritesActionBtn(_ sender: Any) {
+		guard let detailsToSaveInFavoriteViewModel = detailsToSaveInFavoriteViewModel else { return }
+				
+		addToFavoritesBtnOutlet.isEnabled = false
+		presenter?.saveCharBtnPressed(viewModel: detailsToSaveInFavoriteViewModel)
+	}
 }
 
 
@@ -61,8 +77,11 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 	
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let viewModel = presenter?.cellViewModel(at: indexPath) else { fatalError("No ViewModel detected in cellForRowAt of CharacterDetailsViewController") }
+		guard let viewModel = presenter?.cellViewModel(at: indexPath) else { return UITableViewCell() }
 		guard let cell = characterDetailsTableView.dequeueReusableCell(withIdentifier: "characterBibliographyCell", for: indexPath) as? CharacterBibliographyTableViewCell else { return UITableViewCell() }
+		
+		// Load detailsToSaveInFavoriteViewModel with the retrieved viewModel
+		detailsToSaveInFavoriteViewModel = viewModel
 		
 		let viewModelSection = indexPath.section
 		
@@ -130,7 +149,7 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 			return ""
 			
 		default:
-				return constantStrings.kCharDetailsSectionTitles[section]
+			return constantStrings.kCharDetailsSectionTitles[section]
 		}
 	}
 	
@@ -189,5 +208,24 @@ extension CharacterDetailsViewController: CharacterDetailsTableViewProtocol {
 	// MARK: Reload tableView
 	func reloadTableView() {
 		characterDetailsTableView.reloadData()
+	}
+	
+	
+	// MARK: - Show Messages of Character Saved (or not) in the data base
+	func showCharacterSavedSuccessfullyMsg() {
+		showMessageAlert(title: "characterSavedSuccessfullyTitle".localized,
+						 message: "characterSavedSuccessfullyMsg".localized)
+		
+		// Re-enable the "save in favorites" button once the showMessageAlert window prompts
+		addToFavoritesBtnOutlet.isEnabled = true
+	}
+	
+	
+	func showCharacterCannotBeSavedMsg() {
+		showMessageAlert(title: "characterCannotBeSavedTitle".localized,
+						 message: "characterCannotBeSavedMsg".localized)
+		
+		// Re-enable the "save in favorites" button once the showMessageAlert window prompts
+		addToFavoritesBtnOutlet.isEnabled = true
 	}
 }

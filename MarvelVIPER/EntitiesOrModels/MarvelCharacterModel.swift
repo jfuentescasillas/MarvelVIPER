@@ -83,7 +83,7 @@ extension MarvelResults {
 	
 	
 	var toDetailsCellViewModel: CharacterDetailsViewModel {
-		return CharacterDetailsViewModel(characterName: name, characterImageURL: imageURL,
+		return CharacterDetailsViewModel(characterID: id, characterName: name, characterImageURL: imageURL,
 										 characterDescription: description, characterComics: comics.items,
 										 characterSeries: series.items, characterStories: stories.items,
 										 characterEvents: events.items)
