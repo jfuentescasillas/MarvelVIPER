@@ -52,7 +52,16 @@
 "characterCannotBeSavedTitle"     	= "Oh là-là!";
 "characterCannotBeSavedMsg"		 	= "Ce personnage se trouve déjà dans ta liste de favoris! Donc, il n'y sera pas réenregistrée.";
 
+
 // ----------------------------------------------
-// MARK: - Favorites list ViewController
+// MARK: - Favorite Characters list
+// ViewController
 "favoriteCharactersVCTitle"			 = "Personnages Marvel Favoris";
+"favCharsResetButtonTitle"			 = "Rétablir";
 "characterSavedCommentsDefaultValue" = "Écris ici tes observations sur ce personnage...";
+"emptyFavoriteListTxt"				 = "Cette liste de personnages favoris est encore vide! Ajoutes-en dès le tab 'Personnages'!";
+
+// Presenter
+// Alert controller messages
+"noFavoriteCharsFoundTitle" = "Aucun personnage trouvé!";
+"noFavoriteCharsFoundMsg"   = "Ta liste de personnages Marvel préférés n'a aucun personnage avec le nom demandé. Réessaie avec un autre nom, s'il te plaît.";
