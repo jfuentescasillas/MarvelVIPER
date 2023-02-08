@@ -56,6 +56,14 @@
 
 
 // ----------------------------------------------
-// MARK: - Favorites list ViewController
+// MARK: - Favorite Characters list
+// ViewController
 "favoriteCharactersVCTitle"			 = "Favorite Marvel Characters";
+"favCharsResetButtonTitle"			 = "Reset";
 "characterSavedCommentsDefaultValue" = "Write here your observations about this character...";
+"emptyFavoriteListTxt"				 = "This list of favorite characters is still empty. Add some from the 'Characters' tab!";
+
+// Presenter
+// Alert controller messages
+"noFavoriteCharsFoundTitle" = "No Marvel Characters Found!";
+"noFavoriteCharsFoundMsg"   = "Your favorite list of characters does not have any character with the requested query, please try again with another name.";

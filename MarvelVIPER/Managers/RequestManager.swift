@@ -6,13 +6,17 @@
 //
 
 
-import Foundation
+import UIKit
 import Combine
+import CoreData
 
 
 protocol RequestManagerProtocol: AnyObject {
 	func requestGeneric<T: Decodable>(requestDto: RequestDTO, entityClass: T.Type) -> AnyPublisher<T, ApiError>
 	func requestCharacterSearch<T: Decodable>(requestDto: RequestDTO, entityClass: T.Type) -> AnyPublisher<T, ApiError>
+	
+	//func requestFromDatabase<T: Decodable>(withRequest: NSFetchRequest<FavoriteCharacter>?,
+	//										 entityClass: T.Type) -> AnyPublisher<T, ApiError>
 }
 
 
@@ -24,7 +28,9 @@ class RequestManager: RequestManagerProtocol {
 		let endpoint = requestDto.endpoint
 		
 		guard let url = URL(string: endpoint) else {
-			preconditionFailure("\(ApiError.unknownError)")
+			let error = ApiError.unknownError
+			
+			return Fail(error: error).eraseToAnyPublisher()
 		}
 				
 		let dataTask = URLSession.shared.dataTaskPublisher(for: url)
@@ -91,7 +97,9 @@ class RequestManager: RequestManagerProtocol {
 		let endpoint = requestDto.endpoint
 		
 		guard let url = URL(string: endpoint) else {
-			preconditionFailure("\(ApiError.unknownError)")
+			let error = ApiError.unknownError
+			
+			return Fail(error: error).eraseToAnyPublisher()
 		}
 				
 		let dataTask = URLSession.shared.dataTaskPublisher(for: url)
@@ -151,4 +159,57 @@ class RequestManager: RequestManagerProtocol {
 		
 		return dataTask
 	}
+	
+	
+	// MARK: - Request data from Database
+	/*internal func requestFromDatabase<T: Decodable>(withRequest: NSFetchRequest<FavoriteCharacter>? = FavoriteCharacter.fetchRequest(),
+													entityClass: T.Type) -> AnyPublisher<T, ApiError> {
+		// Core Data Properties
+		let appDelegate  = UIApplication.shared.delegate as! AppDelegate
+		lazy var context = appDelegate.persistentContainer.viewContext
+		
+		guard let withRequest = withRequest else {
+			let error = ApiError.unknownError
+			
+			return Fail(error: error).eraseToAnyPublisher()
+		}
+		
+		withRequest.returnsObjectsAsFaults = true
+			
+		var favChars: [FavoriteCharacter]!
+		
+		do {
+			let results = try context.fetch(withRequest)
+						
+			if results.count > 0  {
+				// Assign the results found in favBeersArray
+				favChars = results
+				
+				/*print("FavBeers: \(favBeers)")
+				print("---------------")*/
+				
+				// Just to check what is being saved
+				/*for result in results as [NSManagedObject] {
+					guard let savedFavBeerID = result.value(forKey: "favBeerID") as? Int16 else { return }
+					guard let savedFavBeerName = result.value(forKey: "favBeerName") as? String else { return }
+					guard let savedFavBeerDescription = result.value(forKey: "favBeerDescription") as? String else { return }
+					
+					print("The saved fav beer ID is: \(savedFavBeerID)")
+					print("The saved fav beer Name is: \(savedFavBeerName)")
+					print("The saved fav beer Description is: \(savedFavBeerDescription)")
+					print("---------------(inside requestFavoriteBeers() at FavoriteBeersTablePresenter class)")
+					
+				}*/
+			} /* else if isSearching {
+				viewController?.showMessageAlert(title: "noFavoriteCharsFoundTitle".localized,
+									   message: "noFavoriteCharsFoundMsg".localized)
+			}*/ else {
+				print("Initial status with an empty list.")
+			}
+		} catch {
+			print("Error requesting the list of favorite characters")
+		}
+		
+		return favChars
+	}*/
 }
