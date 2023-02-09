@@ -23,6 +23,7 @@ protocol MarvelCharactersListViewProtocol {
 }
 
 
+// MARK: - Main Class. MarvelCharactersListViewController
 class MarvelCharactersListViewController: BaseViewController<MarvelCharactersListPresenterProtocol> {
 	// MARK: Properties
 	private var hasMoreCharacters: Bool = true
@@ -97,6 +98,7 @@ class MarvelCharactersListViewController: BaseViewController<MarvelCharactersLis
 }
 
 
+// MARK: - Main Class. MarvelCharactersListViewProtocol
 extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	// Activity Indicator Controllers
 	func startActivity() {
@@ -269,7 +271,7 @@ extension MarvelCharactersListViewController: UICollectionViewDataSource {
 
 // MARK: - Extension. CollectionViewDelegate
 extension MarvelCharactersListViewController: UICollectionViewDelegate {
-	// MARK: - Pagination
+	// MARK: Pagination
 	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		let offsetY 	  = scrollView.contentOffset.y     // y coordinate (up and down)
 		let contentHeight = scrollView.contentSize.height  // The entire scrollview, if there are 5,000 items, it will be very tall
@@ -281,14 +283,14 @@ extension MarvelCharactersListViewController: UICollectionViewDelegate {
 	}
 	
 	
-	// MARK: - Navigate to Details VC
+	// MARK: Navigate to Details VC
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		presenter?.didselectItem(at: indexPath)
 	}
 }
 
 
-// MARK: - Extension: UISearchBarDelegate
+// MARK: - Extension. UISearchBarDelegate
 extension MarvelCharactersListViewController: UISearchBarDelegate {
 	// MARK: UISearchBarDelegate Methods
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

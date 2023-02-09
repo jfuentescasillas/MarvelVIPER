@@ -10,7 +10,7 @@ import Foundation
 
 protocol FavoriteCharsListRouterProtocol {
 	// This viewModel exists in CharacterDetailsViewController
-	func goToFavCharDetailVC(with favCharViewModel: CharacterDetailsViewModel)
+	func goToFavCharDetailVC(with favCharViewModel: FavoriteCharacter)
 }
 
 
@@ -20,7 +20,9 @@ class FavoriteCharsListRouter: BaseRouter<FavoriteMarvelCharsListPresenterProtoc
 
 
 extension FavoriteCharsListRouter: FavoriteCharsListRouterProtocol {
-	internal func goToFavCharDetailVC(with favCharViewModel: CharacterDetailsViewModel) {
+	internal func goToFavCharDetailVC(with favCharViewModel: FavoriteCharacter) {
+		print("favCharViewModel: \(favCharViewModel)")
+		
 		/*let vc = CharacterDetailsAssembly.characterDetailsViewController(dto: CharacterIdDTO(charID: characterID))
 		
 		if let navigationController = viewController?.navigationController {

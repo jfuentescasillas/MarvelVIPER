@@ -61,6 +61,10 @@
 "characterSavedCommentsDefaultValue" = "Écris ici tes observations sur ce personnage...";
 "emptyFavoriteListTxt"				 = "Cette liste de personnages favoris est encore vide! Ajoutes-en dès le tab 'Personnages'!";
 
+// Alert controller messages
+"alertControllerInvalidQueryTitle" = "Requête invalide";
+"alertControllerInvalidQueryMsg"   = "Le contenu de la recherche ne peut pas être vide. Veuillez utiliser une valeur valide afin de rechercher un personnage dans votre liste de personnages favorites.";
+
 // Presenter
 // Alert controller messages
 "noFavoriteCharsFoundTitle" = "Aucun personnage trouvé!";

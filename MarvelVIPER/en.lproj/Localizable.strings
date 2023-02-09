@@ -63,6 +63,10 @@
 "characterSavedCommentsDefaultValue" = "Write here your observations about this character...";
 "emptyFavoriteListTxt"				 = "This list of favorite characters is still empty. Add some from the 'Characters' tab!";
 
+// Alert controller messages
+"alertControllerInvalidQueryTitle" = "Invalid Query";
+"alertControllerInvalidQueryMsg"   = "Your search must not be empty. Please insert a valid value in order to search a character in your list of favorites.";
+
 // Presenter
 // Alert controller messages
 "noFavoriteCharsFoundTitle" = "No Marvel Characters Found!";
