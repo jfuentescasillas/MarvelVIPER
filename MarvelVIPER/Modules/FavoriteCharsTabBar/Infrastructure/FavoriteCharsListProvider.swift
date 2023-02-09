@@ -8,10 +8,12 @@
 
 import Foundation
 import Combine
+import CoreData
 
 
 protocol FavoriteCharsListProviderProtocol {
-	func fetchFavoriteChars(completionHandler: @escaping (Result<FavoriteCharacter, ApiError>) -> Void)
+	//func fetchFavoriteChars(completionHandler: @escaping (Result<FavoriteCharacter, ApiError>) -> Void)
+	func fetchFavoriteChars(withRequest: NSFetchRequest<FavoriteCharacter>?) -> [FavoriteCharacter]?
 }
 
 
@@ -20,7 +22,8 @@ class FavoriteCharsListProvider: FavoriteCharsListProviderProtocol {
 	var cancellable = [AnyCancellable]()
 	
 	
-	func fetchFavoriteChars(completionHandler: @escaping (Result<FavoriteCharacter, ApiError>) -> Void) {
-		
+	//func fetchFavoriteChars(completionHandler: @escaping (Result<FavoriteCharacter, ApiError>) -> Void) {
+	func fetchFavoriteChars(withRequest: NSFetchRequest<FavoriteCharacter>?) -> [FavoriteCharacter]? {
+		return provider.requestFromDatabase(withRequest: withRequest)
 	}
 }

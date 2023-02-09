@@ -14,6 +14,7 @@ protocol FavoriteCharsListViewProtocol {
 }
 
 
+// MARK: - Main Class of the view FavoriteCharsViewController
 class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPresenterProtocol> {
 	// MARK: - Properties
 	var isSearching: Bool = false
@@ -21,7 +22,7 @@ class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPre
 	
 	// MARK: - Elements in Storyboard
 	@IBOutlet weak var resetSearchOutlet: UIBarButtonItem!
-	@IBOutlet weak var searchFavoriteChar: UISearchBar!
+	@IBOutlet weak var searchFavCharSearchBar: UISearchBar!
 	@IBOutlet weak var favCharsTableView: UITableView!
 	@IBOutlet weak var emptyFavoritesLbl: UILabel!
 	@IBOutlet weak var emptyLogoContainerView: UIView!
@@ -45,7 +46,7 @@ class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPre
 		}
 		
 		resetSearchOutlet.title 	    = "favCharsResetButtonTitle".localized
-		searchFavoriteChar.placeholder  = "charsSearchBarPlaceholder".localized
+		searchFavCharSearchBar.placeholder  = "charsSearchBarPlaceholder".localized
 		emptyFavoritesLbl.text 	        = "emptyFavoriteListTxt".localized
 				
 		registerNotifications()
@@ -84,9 +85,30 @@ class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPre
 	@objc func keyboardWillHide(notification: NSNotification) {
 		favCharsTableView.contentInset.bottom = 0
 	}
+	
+	
+	// MARK: - Action buttons pressed
+	@IBAction func resetBtnPressed(_ sender: Any) {
+		resetDefaultFavoriteChars()
+	}
+	
+	
+	private func resetDefaultFavoriteChars() {
+		searchFavCharSearchBar.text = ""
+		resetSearchOutlet.isEnabled = false
+		isSearching 				= false
+		
+		presenter?.resetOrCancelButtonPressed()
+		
+		// These lines help to hide the keyboard once the cancel button was clicked
+		DispatchQueue.main.async {
+			self.searchFavCharSearchBar.resignFirstResponder()
+		}
+	}
 }
 
 
+// MARK: - Extension. FavoriteCharsListViewProtocol
 extension FavoriteCharsViewController: FavoriteCharsListViewProtocol {
 	func reloadTableViewData() {
 		DispatchQueue.main.async {
@@ -140,5 +162,55 @@ extension FavoriteCharsViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension FavoriteCharsViewController: UITableViewDelegate {
+	// Cell is clicked
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		favCharsTableView.deselectRow(at: indexPath, animated: true)
+		
+		presenter?.didselectItem(at: indexPath)
+	}
 	
+	
+	// Delete character from list
+	func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+		return .delete
+	}
+	
+	
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			favCharsTableView.beginUpdates()
+			favCharsTableView.deleteRows(at: [indexPath], with: .fade)
+			
+			presenter?.deleteFavChar(at: indexPath)
+			favCharsTableView.endUpdates()
+		}
+	}
+}
+
+
+// MARK: - Extension: SearchBarDelegate
+extension FavoriteCharsViewController: UISearchBarDelegate {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		resetSearchOutlet.isEnabled = true
+		isSearching = true
+		
+		guard let searchedFavCharName = searchBar.text else { return }
+		
+		// The search can only contain numbers and/or digits, otherwise it fails.
+		if !searchedFavCharName.isEmpty {
+			presenter?.fetchSearchedFavoriteItems(searchedName: searchedFavCharName)
+		} else  {
+			showMessageAlert(title: "alertControllerInvalidQueryTitle".localized,
+							 message: "alertControllerInvalidQueryMsg".localized)
+		}		
+		
+		DispatchQueue.main.async {
+			searchBar.resignFirstResponder()
+		}
+	}
+	
+	
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		resetDefaultFavoriteChars()
+	}
 }

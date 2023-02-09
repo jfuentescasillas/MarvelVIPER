@@ -17,6 +17,7 @@ protocol RequestManagerProtocol: AnyObject {
 	
 	//func requestFromDatabase<T: Decodable>(withRequest: NSFetchRequest<FavoriteCharacter>?,
 	//										 entityClass: T.Type) -> AnyPublisher<T, ApiError>
+	func requestFromDatabase(withRequest: NSFetchRequest<FavoriteCharacter>?) -> [FavoriteCharacter]?
 }
 
 
@@ -162,21 +163,20 @@ class RequestManager: RequestManagerProtocol {
 	
 	
 	// MARK: - Request data from Database
-	/*internal func requestFromDatabase<T: Decodable>(withRequest: NSFetchRequest<FavoriteCharacter>? = FavoriteCharacter.fetchRequest(),
-													entityClass: T.Type) -> AnyPublisher<T, ApiError> {
+	//internal func requestFromDatabase<T: Decodable>(withRequest: NSFetchRequest<FavoriteCharacter>? = FavoriteCharacter.fetchRequest(),
+		//											entityClass: T.Type) -> AnyPublisher<T, ApiError> {
+	internal func requestFromDatabase(withRequest: NSFetchRequest<FavoriteCharacter>? = FavoriteCharacter.fetchRequest()) -> [FavoriteCharacter]? {
+		// Unwrap request
+		guard let withRequest = withRequest else { fatalError("Fatal error in requestFromDatabase") }
+		
+		withRequest.returnsObjectsAsFaults = true
+		
 		// Core Data Properties
 		let appDelegate  = UIApplication.shared.delegate as! AppDelegate
 		lazy var context = appDelegate.persistentContainer.viewContext
 		
-		guard let withRequest = withRequest else {
-			let error = ApiError.unknownError
-			
-			return Fail(error: error).eraseToAnyPublisher()
-		}
-		
-		withRequest.returnsObjectsAsFaults = true
-			
-		var favChars: [FavoriteCharacter]!
+		// Character Properties.
+		var favChars: [FavoriteCharacter]?
 		
 		do {
 			let results = try context.fetch(withRequest)
@@ -211,5 +211,5 @@ class RequestManager: RequestManagerProtocol {
 		}
 		
 		return favChars
-	}*/
+	}
 }

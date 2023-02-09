@@ -99,7 +99,8 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 	}
 	
 	
-	// MARK: - Save Character in Favorites List
+	// MARK: - Create Data in the Database
+	// Save character in the Favorite Characters List
 	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel) {
 		let appDelegate  = UIApplication.shared.delegate as! AppDelegate
 		let context 	 = appDelegate.persistentContainer.viewContext

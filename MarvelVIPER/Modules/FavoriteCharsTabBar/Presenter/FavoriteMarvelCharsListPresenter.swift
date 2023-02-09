@@ -12,15 +12,19 @@ import CoreData
 
 protocol FavoriteMarvelCharsListPresenterProtocol {
 	var numFavChars: Int { get }
-	
-	func fetchCharactersFromDatabase()
-	func fetchSearchedFavoriteItems(searchedName: String)
+			
 	func cellViewModel(at indexPath: IndexPath) -> FavoriteCharacter
 	func didselectItem(at indexPath: IndexPath)
-	func resetButtonPressed()
+	func resetOrCancelButtonPressed()
+	
+	// CoreData methods to Create, Read, Update or Delete (CRUD) a character in the favorite list
+	func fetchCharactersFromDatabase()
+	func fetchSearchedFavoriteItems(searchedName: String)
+	func deleteFavChar(at indexPath: IndexPath)
 }
 
 
+// MARK: - Main class. FavoriteMarvelCharactersListPresenter
 class FavoriteMarvelCharactersListPresenter: BasePresenter<FavoriteCharsViewController, FavoriteCharsListRouterProtocol> {
 	// Properties related to the PresenterProtocol
 	var numFavChars: Int {
@@ -39,66 +43,75 @@ class FavoriteMarvelCharactersListPresenter: BasePresenter<FavoriteCharsViewCont
 
 	// Private properties
 	private var isSearching: Bool = false
-	private var searchedName: String = ""  // When the user searches for a character's name, it will be stored in this variable
+	private var auxSearchedName: String = ""  // When the user searches for a character's name, it will be stored in this variable
 	
 	// Core Data Properties
-	let appDelegate  = UIApplication.shared.delegate as! AppDelegate
-	lazy var context = appDelegate.persistentContainer.viewContext
+	private let appDelegate  = UIApplication.shared.delegate as! AppDelegate
+	private lazy var context = appDelegate.persistentContainer.viewContext
 	
 	
-	// MARK: - Create, Read, Update and Delete (CRUD) Data in CoreData
-	// MARK: Load Data
+	// MARK: - Create, Read, Update and Delete (CRUD) Data
+	// MARK: Read Data from Database (in Core Data)
+	// (it's created in the CharacterDetailsPresenterImpl)
 	private func loadFavCharsData(withRequest: NSFetchRequest<FavoriteCharacter> = FavoriteCharacter.fetchRequest()) {
 		viewController?.startActivity()
 		
-		withRequest.returnsObjectsAsFaults = true
-	
-		do {
-			let results = try context.fetch(withRequest)
-						
-			if results.count > 0  {
-				// Assign the results found in favBeersArray
-				favChars = results
-				
-				/*print("FavBeers: \(favBeers)")
-				print("---------------")*/
-				
-				// Just to check what is being saved
-				/*for result in results as [NSManagedObject] {
-					guard let savedFavBeerID = result.value(forKey: "favBeerID") as? Int16 else { return }
-					guard let savedFavBeerName = result.value(forKey: "favBeerName") as? String else { return }
-					guard let savedFavBeerDescription = result.value(forKey: "favBeerDescription") as? String else { return }
-					
-					print("The saved fav beer ID is: \(savedFavBeerID)")
-					print("The saved fav beer Name is: \(savedFavBeerName)")
-					print("The saved fav beer Description is: \(savedFavBeerDescription)")
-					print("---------------(inside requestFavoriteBeers() at FavoriteBeersTablePresenter class)")
-					
-				}*/
-			} else if isSearching {
+		guard let results = interactor?.fetchCharactersFromDataBaseBusiness(withRequest: withRequest) else {
+			viewController?.stopAndHideActivity()
+			
+			// This is active when the results from a search are empty
+			if isSearching {
 				viewController?.showMessageAlert(title: "noFavoriteCharsFoundTitle".localized,
 									   message: "noFavoriteCharsFoundMsg".localized)
-			} else {
-				print("Initial status with an empty list.")
 			}
-		} catch {
-			print("Error requesting the list of favorite characters")
+			
+			return			
+		}
+		
+		if results.count > 0  {
+			// Assign the results found in favBeersArray
+			favChars = results
+		} else {
+			print("List is empty.")
 		}
 		
 		viewController?.stopAndHideActivity()
 	}
+	
+	
+	// MARK: Delete Character from Favorite list
+	func deleteFavChar(at indexPath: IndexPath) {
+		context.delete(favChars[indexPath.row])  // This line goes first...
+		favChars.remove(at: indexPath.row)  //...Then this line goes next.
+		
+		do {
+			try context.save()
+		} catch {
+			print("Error Deleting the Character From Favorites")
+		}
+	}
 }
 
 
-// MARK: - Extension
+// MARK: - Extension. FavoriteMarvelCharsListPresenterProtocol
 extension FavoriteMarvelCharactersListPresenter: FavoriteMarvelCharsListPresenterProtocol {
 	func fetchCharactersFromDatabase() {
-		loadFavCharsData()
+		if isSearching {
+			fetchSearchedFavoriteItems(searchedName: auxSearchedName)
+		} else {
+			loadFavCharsData()
+		}
 	}
 	
 	
 	func fetchSearchedFavoriteItems(searchedName: String) {
+		auxSearchedName	= searchedName
+		isSearching     = true
 		
+		let searchRequest: NSFetchRequest<FavoriteCharacter> = FavoriteCharacter.fetchRequest()
+		searchRequest.predicate = NSPredicate(format: "favCharName CONTAINS[cd] %@", searchedName)
+		
+		loadFavCharsData(withRequest: searchRequest)
 	}
 	
 	
@@ -108,11 +121,51 @@ extension FavoriteMarvelCharactersListPresenter: FavoriteMarvelCharsListPresente
 	
 	
 	func didselectItem(at indexPath: IndexPath) {
-		
+		router?.goToFavCharDetailVC(with: favChars[indexPath.row])
 	}
 	
 	
-	func resetButtonPressed() {
-		print("Button to Reset the Favorite Characters Search was pressed")
+	func resetOrCancelButtonPressed() {
+		isSearching 	= false
+		auxSearchedName	= ""
+		fetchCharactersFromDatabase()
 	}
 }
+
+
+/* // Inside of
+   // func loadFavCharsData(withRequest:...). This code below is implemented when the interactor to fetch the data from the database is not used
+ 
+ withRequest.returnsObjectsAsFaults = true
+
+ do {
+	 let results = try context.fetch(withRequest)
+				 
+	 if results.count > 0  {
+		 // Assign the results found in favBeersArray
+		 favChars = results
+		 
+		 /*print("FavBeers: \(favBeers)")
+		 print("---------------")*/
+		 
+		 // Just to check what is being saved
+		 /*for result in results as [NSManagedObject] {
+			 guard let savedFavBeerID = result.value(forKey: "favBeerID") as? Int16 else { return }
+			 guard let savedFavBeerName = result.value(forKey: "favBeerName") as? String else { return }
+			 guard let savedFavBeerDescription = result.value(forKey: "favBeerDescription") as? String else { return }
+			 
+			 print("The saved fav beer ID is: \(savedFavBeerID)")
+			 print("The saved fav beer Name is: \(savedFavBeerName)")
+			 print("The saved fav beer Description is: \(savedFavBeerDescription)")
+			 print("---------------(inside requestFavoriteBeers() at FavoriteBeersTablePresenter class)")
+			 
+		 }*/
+	 } else if isSearching {
+		 viewController?.showMessageAlert(title: "noFavoriteCharsFoundTitle".localized,
+								message: "noFavoriteCharsFoundMsg".localized)
+	 } else {
+		 print("Initial status with an empty list.")
+	 }
+ } catch {
+	 print("Error requesting the list of favorite characters")
+ } */
