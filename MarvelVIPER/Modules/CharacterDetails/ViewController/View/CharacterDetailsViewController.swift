@@ -76,6 +76,17 @@ extension CharacterDetailsViewController: UITableViewDataSource {
 	}
 	
 	
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch section {
+		case 0, 1:
+			return ""
+			
+		default:
+			return constantStrings.kCharDetailsSectionTitles[section]
+		}
+	}
+	
+	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let viewModel = presenter?.cellViewModel(at: indexPath) else { return UITableViewCell() }
 		guard let cell = characterDetailsTableView.dequeueReusableCell(withIdentifier: "characterBibliographyCell", for: indexPath) as? CharacterBibliographyTableViewCell else { return UITableViewCell() }
@@ -140,17 +151,6 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		// For section 0 and 1 (where the character's's image and character's description are located), is used a height of 0.1 points. The other sections (which have names) have a height of 30.
 		return (section == 0 || section == 1) ? 0.01 : 30
-	}
-	
-	
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		switch section {
-		case 0, 1:
-			return ""
-			
-		default:
-			return constantStrings.kCharDetailsSectionTitles[section]
-		}
 	}
 	
 	

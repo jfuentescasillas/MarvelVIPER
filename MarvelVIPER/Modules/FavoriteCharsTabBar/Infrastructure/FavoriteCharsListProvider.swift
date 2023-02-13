@@ -7,7 +7,7 @@
 
 
 import Foundation
-import Combine
+//import Combine
 import CoreData
 
 
@@ -19,7 +19,7 @@ protocol FavoriteCharsListProviderProtocol {
 
 class FavoriteCharsListProvider: FavoriteCharsListProviderProtocol {
 	let provider: RequestManagerProtocol = RequestManager()
-	var cancellable = [AnyCancellable]()
+	//var cancellable = [AnyCancellable]()
 	
 	
 	//func fetchFavoriteChars(completionHandler: @escaping (Result<FavoriteCharacter, ApiError>) -> Void) {

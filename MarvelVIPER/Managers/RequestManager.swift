@@ -18,6 +18,7 @@ protocol RequestManagerProtocol: AnyObject {
 	//func requestFromDatabase<T: Decodable>(withRequest: NSFetchRequest<FavoriteCharacter>?,
 	//										 entityClass: T.Type) -> AnyPublisher<T, ApiError>
 	func requestFromDatabase(withRequest: NSFetchRequest<FavoriteCharacter>?) -> [FavoriteCharacter]?
+	func saveCommentsAndUpdateCoreData(withComment: String, withViewModel: FavoriteCharacter) -> Bool
 }
 
 
@@ -211,5 +212,25 @@ class RequestManager: RequestManagerProtocol {
 		}
 		
 		return favChars
+	}
+	
+	
+	// MARK: - Update Database
+	func saveCommentsAndUpdateCoreData(withComment: String, withViewModel: FavoriteCharacter) -> Bool {
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		let context 	= appDelegate.persistentContainer.viewContext
+				
+		withViewModel.setValue(withComment, forKey: "favCharacterComments")
+		
+		// Save everything
+		do {
+			try context.save()
+			
+			return true
+		} catch {
+			print("Error trying to save favorite beer Comment inside FavBeerDetailsPresenter")
+			
+			return false
+		}		
 	}
 }

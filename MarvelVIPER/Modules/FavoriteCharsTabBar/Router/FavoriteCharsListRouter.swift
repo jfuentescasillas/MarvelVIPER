@@ -23,12 +23,12 @@ extension FavoriteCharsListRouter: FavoriteCharsListRouterProtocol {
 	internal func goToFavCharDetailVC(with favCharViewModel: FavoriteCharacter) {
 		print("favCharViewModel: \(favCharViewModel)")
 		
-		/*let vc = CharacterDetailsAssembly.characterDetailsViewController(dto: CharacterIdDTO(charID: characterID))
+		let vc = FavoriteCharDetailsAssembly.favoriteCharDetailsViewController(withFavoriteCharacter: favCharViewModel) 
 		
 		if let navigationController = viewController?.navigationController {
-			navigationController.pushViewController(vc, animated: true)
+			navigationController.pushViewController(vc, animated: true) //present(vc, animated: true)
 		} else {
 			viewController?.present(vc, animated: true)
-		}*/
+		}
 	}
 }
