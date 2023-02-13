@@ -69,3 +69,12 @@
 // Alert controller messages
 "noFavoriteCharsFoundTitle" = "Aucun personnage trouvé!";
 "noFavoriteCharsFoundMsg"   = "Ta liste de personnages Marvel préférés n'a aucun personnage avec le nom demandé. Réessaie avec un autre nom, s'il te plaît.";
+
+
+// ----------------------------------------------
+// MARK: - Favorite Characters Details
+"commentUpdateSavedInDBTitle" = "Commentaire Enregistré!";
+"commentSavedMsg" 		 	  = "Ton commentaire sur ce personnage a été enregistré avec succès dans la base de données.";
+
+"commentUpdateFailedToBeSavedInDBTitle" = "Commentaire Non Enregistré!";
+"commentFailedToBeSavedMsg" 	   		= "Ton commentaire sur ce personnage n'a pas pu être enregistré dans la base de données. Réessaie plus tard s'il te plaît.";

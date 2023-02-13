@@ -71,3 +71,12 @@
 // Alert controller messages
 "noFavoriteCharsFoundTitle" = "No Marvel Characters Found!";
 "noFavoriteCharsFoundMsg"   = "Your favorite list of characters does not have any character with the requested query, please try again with another name.";
+
+
+// ----------------------------------------------
+// MARK: - Favorite Characters Details
+"commentUpdateSavedInDBTitle" = "Comment Saved!";
+"commentSavedMsg" 		 	  = "Your comment about this character was successfully saved in the database";
+
+"commentUpdateFailedToBeSavedInDBTitle" = "Comment NOT Saved!";
+"commentFailedToBeSavedMsg" 	   		= "Your comment about this character could not be saved in the database. Please try again.";

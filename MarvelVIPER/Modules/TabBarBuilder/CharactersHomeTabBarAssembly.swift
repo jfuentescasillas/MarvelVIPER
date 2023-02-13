@@ -13,7 +13,7 @@ final public class CharactersHomeTabBarAssembly {
 	static func charactersTabBarController() -> CharactersHomeTabBar {
 		let tabBarViewContr = CharactersHomeTabBar.createFromStoryboard()
 		let oneVC = MarvelCollectionAssembly.marvelCharactersNavigationController()
-		let twoVC = FavoriteCharsViewAssembly.favoriteCharsViewNavigationController() //MarvelCollectionAssembly.marvelCharactersNavigationController()
+		let twoVC = FavoriteCharsViewAssembly.favoriteCharsViewNavigationController()
 		
 		let oneCustomTabBarItem = UITabBarItem(title: "charactersTabBarItem".localized, image: UIImage(systemName: "person.3"), tag: 0)
 		let twoCustomTabBarItem = UITabBarItem(title: "favoritesTabBarItem".localized, image: UIImage(systemName: "star"), tag: 1)

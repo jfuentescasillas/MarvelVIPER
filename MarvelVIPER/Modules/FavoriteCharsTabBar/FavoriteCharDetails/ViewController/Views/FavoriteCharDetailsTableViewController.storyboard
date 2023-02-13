@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AGN-bY-9jk">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Favorite Char Details Table View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="FavoriteCharDetailsTableViewController" id="Y6W-OH-hqX" customClass="FavoriteCharDetailsTableViewController" customModule="MarvelVIPER" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rHi-o1-SaX">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favCharImgCell" rowHeight="235" id="STa-Jz-nqE" customClass="FavCharImgTableViewCell" customModule="MarvelVIPER" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="235"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="STa-Jz-nqE" id="Zf9-BQ-4kP">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="235"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WCF-IV-SAC">
+                                                    <rect key="frame" x="22" y="0.0" width="349" height="235"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WCF-IV-SAC" firstAttribute="leading" secondItem="Zf9-BQ-4kP" secondAttribute="leadingMargin" constant="2" id="EoU-SY-nrG"/>
+                                                <constraint firstItem="WCF-IV-SAC" firstAttribute="centerX" secondItem="Zf9-BQ-4kP" secondAttribute="centerX" id="Rkb-k6-k0y"/>
+                                                <constraint firstItem="WCF-IV-SAC" firstAttribute="top" secondItem="Zf9-BQ-4kP" secondAttribute="topMargin" constant="-11" id="aJy-xJ-ymg"/>
+                                                <constraint firstItem="WCF-IV-SAC" firstAttribute="centerY" secondItem="Zf9-BQ-4kP" secondAttribute="centerY" id="hRx-9n-0Yz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="favCharDetailsImgView" destination="WCF-IV-SAC" id="VaY-S7-pls"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favCharDescriptionCell" textLabel="rjN-k3-D5Z" rowHeight="63" style="IBUITableViewCellStyleDefault" id="tcZ-pC-OQ2" customClass="FavCharDescriptionTableViewCell" customModule="MarvelVIPER" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="285" width="393" height="63"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tcZ-pC-OQ2" id="Ttb-SW-vPX">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="63"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rjN-k3-D5Z">
+                                                    <rect key="frame" x="20" y="0.0" width="353" height="63"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favCharBibliographyCell" textLabel="yD9-lY-k35" rowHeight="63" style="IBUITableViewCellStyleDefault" id="4dN-xJ-YEA" customClass="FavCharBibliographyTableViewCell" customModule="MarvelVIPER" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="348" width="393" height="63"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4dN-xJ-YEA" id="vad-aA-xX0">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="63"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Favorite Bibliography" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yD9-lY-k35">
+                                                    <rect key="frame" x="20" y="0.0" width="353" height="63"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favCharObservationsCell" rowHeight="300" id="H2W-vj-PX6" customClass="FavCharObservationsTableViewCell" customModule="MarvelVIPER" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="411" width="393" height="300"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="H2W-vj-PX6" id="pVO-vk-OAE">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Comment..." translatesAutoresizingMaskIntoConstraints="NO" id="UM9-o4-r51">
+                                                    <rect key="frame" x="22" y="13" width="349" height="200"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="200" id="2ZU-8D-tIB"/>
+                                                    </constraints>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Er-t2-jby">
+                                                    <rect key="frame" x="40" y="217" width="313" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="36" id="yRG-PT-Kva"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="filled" title="Update Comment"/>
+                                                    <connections>
+                                                        <action selector="updateCommentBtnPressed:" destination="H2W-vj-PX6" eventType="touchUpInside" id="IgK-P6-9CC"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="UM9-o4-r51" secondAttribute="trailing" constant="2" id="NVA-n5-GUl"/>
+                                                <constraint firstItem="UM9-o4-r51" firstAttribute="top" secondItem="pVO-vk-OAE" secondAttribute="topMargin" constant="2" id="NaU-4Y-4cN"/>
+                                                <constraint firstItem="UM9-o4-r51" firstAttribute="leading" secondItem="pVO-vk-OAE" secondAttribute="leadingMargin" constant="2" id="S5T-wV-fzm"/>
+                                                <constraint firstItem="9Er-t2-jby" firstAttribute="top" secondItem="UM9-o4-r51" secondAttribute="bottom" constant="4" id="SJP-yK-XFx"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9Er-t2-jby" secondAttribute="trailing" constant="20" id="cPw-4D-3bt"/>
+                                                <constraint firstItem="9Er-t2-jby" firstAttribute="leading" secondItem="pVO-vk-OAE" secondAttribute="leadingMargin" constant="20" id="hJn-Nc-2he"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="favCharObservationsTxtView" destination="UM9-o4-r51" id="ZzK-hZ-AWY"/>
+                                            <outlet property="updateCommentOutlet" destination="9Er-t2-jby" id="mbs-jD-Ugl"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="CMa-wY-vR0"/>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="DLF-QO-myX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rHi-o1-SaX" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="QDM-PG-S4V"/>
+                            <constraint firstItem="rHi-o1-SaX" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="kva-k9-BWa"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="rHi-o1-SaX" secondAttribute="trailing" id="lwf-fb-WHW"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="rHi-o1-SaX" secondAttribute="bottom" id="sq1-vu-TLB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="yd3-eK-dUO"/>
+                    <connections>
+                        <outlet property="favDetailsTableView" destination="rHi-o1-SaX" id="b3w-wP-yZ8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1066.4122137404579" y="-16.197183098591552"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eDP-WU-sjH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AGN-bY-9jk" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zhJ-O6-psQ">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="KEt-XB-DKM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m0q-Zm-9W5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139.69465648854961" y="-16.197183098591552"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
