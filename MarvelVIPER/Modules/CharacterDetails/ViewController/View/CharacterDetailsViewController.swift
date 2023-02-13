@@ -54,14 +54,52 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
     }
 	
 	
-	// MARK: - Action Buttons
+	// MARK: - Save Char to Favorites
+	// Action Buttons
 	@IBAction func addToFavoritesActionBtn(_ sender: Any) {
-		guard let detailsToSaveInFavoriteViewModel = detailsToSaveInFavoriteViewModel else { return }
-				
-		addToFavoritesBtnOutlet.isEnabled = false
-		presenter?.saveCharBtnPressed(viewModel: detailsToSaveInFavoriteViewModel)
+		present(alertAddFavCharView, animated: true, completion: nil)
 	}
+		
+	//  Create Alert Controller Object here
+	private	lazy var alertAddFavCharView: UIAlertController = {
+		let alert = UIAlertController(title: "alertContrWriteCommentTitle".localized,
+									  message: "alertContrWriteCommentMsg".localized,
+									  preferredStyle: UIAlertController.Style.alert)
+		
+		// ADD TEXT FIELD (YOU CAN ADD MULTIPLE TEXTFILED AS WELL)
+		alert.addTextField { (textField: UITextField!) in
+			textField.text = ""
+			textField.placeholder = "saveCommentTxtFieldPlaceholder".localized
+			textField.delegate = self
+		}
+		
+		// SAVE BUTTON
+		let save = UIAlertAction(title: "saveBtnTitle".localized,
+								 style: UIAlertAction.Style.default,
+								 handler: { saveAction -> Void in
+			let textField: UITextField = alert.textFields![0]
+
+			guard let detailsToSaveInFavoriteViewModel = self.detailsToSaveInFavoriteViewModel else { return }
+			
+			self.addToFavoritesBtnOutlet.isEnabled = false
+			self.presenter?.saveCharBtnPressed(viewModel: detailsToSaveInFavoriteViewModel,
+											   withUserComment: textField.text ?? "")
+		})
+		
+		// CANCEL BUTTON
+		let cancel = UIAlertAction(title: "cancelBtnTitle".localized,
+								   style: UIAlertAction.Style.default,
+								   handler: { (action : UIAlertAction!) -> Void in })
+		
+		alert.addAction(save)
+		alert.addAction(cancel)
+		
+		return alert
+	}()
 }
+
+
+
 
 
 // MARK: - Extension. TableViewDataSource
@@ -227,5 +265,15 @@ extension CharacterDetailsViewController: CharacterDetailsTableViewProtocol {
 		
 		// Re-enable the "save in favorites" button once the showMessageAlert window prompts
 		addToFavoritesBtnOutlet.isEnabled = true
+	}
+}
+
+
+// MARK: - Extension. UITextFieldDelegate
+extension CharacterDetailsViewController: UITextFieldDelegate {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+	
+		return true
 	}
 }

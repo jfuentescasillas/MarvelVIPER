@@ -52,6 +52,12 @@
 "characterCannotBeSavedTitle"     	= "Oh là-là!";
 "characterCannotBeSavedMsg"		 	= "Ce personnage se trouve déjà dans ta liste de favoris! Donc, il n'y sera pas réenregistrée.";
 
+// Alert controller buttons and messages
+"saveBtnTitle"					 = "Enregistrer";
+"saveCommentTxtFieldPlaceholder" = "Introduire le commentaire ici";
+"alertContrWriteCommentTitle" 	 = "Écris ton commentaire";
+"alertContrWriteCommentMsg" 	 = "Écris tes raisons pour enregistrer ce personnage dans ta list de 'Personnages Favoris'";
+
 
 // ----------------------------------------------
 // MARK: - Favorite Characters list
