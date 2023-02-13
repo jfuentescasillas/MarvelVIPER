@@ -57,7 +57,15 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
 	// MARK: - Save Char to Favorites
 	// Action Buttons
 	@IBAction func addToFavoritesActionBtn(_ sender: Any) {
-		present(alertAddFavCharView, animated: true, completion: nil)
+		guard let detailsToSaveInFavoriteViewModel = detailsToSaveInFavoriteViewModel,
+			  let isCharInDB = presenter?.isCharInDatabase(with: detailsToSaveInFavoriteViewModel)
+		else { return }
+		
+		if isCharInDB {
+			showCharacterCannotBeSavedMsg()
+		} else {
+			present(alertAddFavCharView, animated: true, completion: nil)
+		}
 	}
 		
 	//  Create Alert Controller Object here
@@ -68,7 +76,6 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
 		
 		// ADD TEXT FIELD (YOU CAN ADD MULTIPLE TEXTFILED AS WELL)
 		alert.addTextField { (textField: UITextField!) in
-			textField.text = ""
 			textField.placeholder = "saveCommentTxtFieldPlaceholder".localized
 			textField.delegate = self
 		}
@@ -97,9 +104,6 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
 		return alert
 	}()
 }
-
-
-
 
 
 // MARK: - Extension. TableViewDataSource
