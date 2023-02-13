@@ -54,6 +54,11 @@
 
 "characterSavedCommentsDefaultValue" = "Write here your observations about this character...";
 
+// Alert controller buttons and messages
+"saveBtnTitle"					 = "Save";
+"saveCommentTxtFieldPlaceholder" = "Enter comment here";
+"alertContrWriteCommentTitle"	 = "Write your comment";
+"alertContrWriteCommentMsg"		 = "Write your reasons for saving this character in the list of 'Favorite Characters'";
 
 // ----------------------------------------------
 // MARK: - Favorite Characters list

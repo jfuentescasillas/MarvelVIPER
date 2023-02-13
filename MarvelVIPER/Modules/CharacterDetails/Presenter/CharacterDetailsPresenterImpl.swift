@@ -13,7 +13,7 @@ protocol CharacterDetailsPresenterProtocol {
 	func fetchCharacterDetailsFromAPI()
 	func cellViewModel(at indexPath: IndexPath) -> CharacterDetailsViewModel
 	func numberOfItemsInSection(inSection: Int) -> Int?
-	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel)
+	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel, withUserComment: String)
 }
 
 
@@ -101,7 +101,7 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 	
 	// MARK: - Create Data in the Database
 	// Save character in the Favorite Characters List
-	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel) {
+	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel, withUserComment: String) {
 		let appDelegate  = UIApplication.shared.delegate as! AppDelegate
 		let context 	 = appDelegate.persistentContainer.viewContext
 		
@@ -196,8 +196,12 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 						favCharacter.setValue(bibliographiesToSave, forKey: forKey)
 					}
 					
-					// Save the user's comments about the saved character. This can only be modified in the FavCharDetailsViewController
-					favCharacter.setValue("characterSavedCommentsDefaultValue".localized, forKey: "favCharacterComments")
+					// Save the user's comments about the saved character. This can later be modified in the FavCharDetailsViewController
+					if withUserComment.isEmpty || withUserComment == "" {
+						favCharacter.setValue("characterSavedCommentsDefaultValue".localized, forKey: "favCharacterComments")
+					} else {
+						favCharacter.setValue(withUserComment, forKey: "favCharacterComments")
+					}
 					
 					// Saving the image (which is Data). If some error occurs in the characterImage, the default placeholder will be shown in the cell along with all the data previously saved in favCharacter.setValue(...)
 					guard let imgData = imgData else { return }
