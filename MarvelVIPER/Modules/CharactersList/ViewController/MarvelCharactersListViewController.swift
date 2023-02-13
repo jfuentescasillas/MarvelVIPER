@@ -312,7 +312,7 @@ extension MarvelCharactersListViewController: UISearchBarDelegate {
 		// Use of guard var instead of guard let since its value will later change
 		guard var searchedChar = searchBar.text else { return }
 		
-		print("searchedChar: \(searchedChar)")
+		// print("searchedChar: \(searchedChar)")
 		
 		// The search can only contain numbers and/or digits, otherwise it fails.
 		if searchedChar.isAlphanumeric {

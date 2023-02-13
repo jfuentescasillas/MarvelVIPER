@@ -21,7 +21,7 @@ class FavoriteCharsListRouter: BaseRouter<FavoriteMarvelCharsListPresenterProtoc
 
 extension FavoriteCharsListRouter: FavoriteCharsListRouterProtocol {
 	internal func goToFavCharDetailVC(with favCharViewModel: FavoriteCharacter) {
-		print("favCharViewModel: \(favCharViewModel)")
+		//print("favCharViewModel: \(favCharViewModel)")
 		
 		let vc = FavoriteCharDetailsAssembly.favoriteCharDetailsViewController(withFavoriteCharacter: favCharViewModel) 
 		

@@ -45,7 +45,7 @@ extension FavoriteCharDetailsPresenter: FavoriteCharDetailsPresenterProtocol {
 			return 1
 			
 		case 2:  // Section 2: Character's comics
-			print("favoriteCharDetails?.favCharComics?.count: \(String(describing: favoriteCharDetails?.favCharComics?.count))")
+			// print("favoriteCharDetails?.favCharComics?.count: \(String(describing: favoriteCharDetails?.favCharComics?.count))")
 			return favoriteCharDetails?.favCharComics?.count == 0 ? 1 : favoriteCharDetails?.favCharComics?.count
 			/* The terniary operator above does the same as the next if-else statement
 			 if favoriteCharDetails?.favCharComics?.count == 0 {

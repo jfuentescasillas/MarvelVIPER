@@ -13,6 +13,7 @@ protocol CharacterDetailsPresenterProtocol {
 	func fetchCharacterDetailsFromAPI()
 	func cellViewModel(at indexPath: IndexPath) -> CharacterDetailsViewModel
 	func numberOfItemsInSection(inSection: Int) -> Int?
+	func isCharInDatabase(with viewModel: CharacterDetailsViewModel) -> Bool
 	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel, withUserComment: String)
 }
 
@@ -100,18 +101,10 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 	
 	
 	// MARK: - Create Data in the Database
-	// Save character in the Favorite Characters List
-	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel, withUserComment: String) {
-		let appDelegate  = UIApplication.shared.delegate as! AppDelegate
-		let context 	 = appDelegate.persistentContainer.viewContext
-		
-		guard let imgURLString = viewModel.characterImageURL,
-			  let imgURL = URL(string: imgURLString)
-		else {
-			print("Invalid URL address. Inside CharacterDetailsPresenterImpl")
-			
-			return
-		}
+	// Check if character is already in the database
+	func isCharInDatabase(with viewModel: CharacterDetailsViewModel) -> Bool {
+		let appDelegate  = UIApplication.shared.delegate as! AppDelegate  // Used for CoreData
+		let context 	 = appDelegate.persistentContainer.viewContext  // Used for CoreData
 		
 		// Check if wanted beer is already in the favorite list
 		let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteCharacter")
@@ -119,128 +112,148 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 		request.predicate = NSPredicate(format: "favCharID == %@", "\(viewModel.characterID)")  // If favCharID is already in Favorite Character list, it won't be saved again
 		
 		do {
-			// Just checking if the Character to save is already in the favorites list according to the request.predicate
+			// Just checking if the Character to save is already in the favorites list according to the request.predicate from above
 			let results = try context.fetch(request)
 			
 			// If the result is 0, then the Character is NOT YET in the favorite list and can be saved in it
 			if results.count == 0 {
-				//results.count (should be 0), therefore: this Character can be saved in the list of favorites since it is not duplicated
-				let task = URLSession.shared.dataTask(with: imgURL) { imgData, imgResponse, imgError in
-					if imgError != nil {
-						print("Error downloading the Character's Image")
-						
-						return
-					}
-					
-					// Save new Favorite Character details (usually string and numeric values)
-					let favCharacter = NSEntityDescription.insertNewObject(forEntityName: "FavoriteCharacter", into: context)
-					favCharacter.setValue("\(viewModel.characterID)", forKey: "favCharID")
-					favCharacter.setValue(viewModel.characterName, forKey: "favCharName")
-					
-					// MARK: - Control empty values for the fields that may have.
-					// Character Description
-					guard let description = viewModel.characterDescription  else { return }
-					
-					if description.isEmpty {
-						let noDescription: String = "Character has no description"
-						favCharacter.setValue(noDescription, forKey: "favCharDescription")
-					} else {
-						favCharacter.setValue(description, forKey: "favCharDescription")
-					}
-					
-					// Character comics
-					//print("------Comics------")
-					guard let favCharComics = viewModel.characterComics else { return }
-					
-					fillBibliography(bibliographies: favCharComics,
-									 emptyBibliographyMsg: "Character has no comics",
-									 forKey: "favCharComics")
-					
-					// Character series
-					//print("------Series------")
-					guard let favCharSeries = viewModel.characterSeries else { return }
-					
-					fillBibliography(bibliographies: favCharSeries,
-									 emptyBibliographyMsg: "Character has no series",
-									 forKey: "favCharSeries")
-										
-					// Character stories
-					//print("------Stories------")
-					guard let favCharStories = viewModel.characterStories else { return }
-					
-					fillBibliography(bibliographies: favCharStories,
-									 emptyBibliographyMsg: "Character has no stories",
-									 forKey: "favCharStories")
-														
-					// Character events
-					//print("------Events------")
-					guard let favCharEvents = viewModel.characterEvents else { return }
-					
-					fillBibliography(bibliographies: favCharEvents,
-									 emptyBibliographyMsg: "Character has no events",
-									 forKey: "favCharEvents")
-					
-					
-					// Function to fill the Character's bibliography to save as [String]. Bibliographies can be empty.
-					func fillBibliography(bibliographies: [MarvelItems], emptyBibliographyMsg: String, forKey: String) {
-						var bibliographiesToSave = [String]()
-						
-						if bibliographies.isEmpty {
-							bibliographiesToSave.append(emptyBibliographyMsg)
-						} else {
-							for bibliography in bibliographies {
-								bibliographiesToSave.append(bibliography.name)
-							}
-						}
-						
-						favCharacter.setValue(bibliographiesToSave, forKey: forKey)
-					}
-					
-					// Save the user's comments about the saved character. This can later be modified in the FavCharDetailsViewController
-					if withUserComment.isEmpty || withUserComment == "" {
-						favCharacter.setValue("characterSavedCommentsDefaultValue".localized, forKey: "favCharacterComments")
-					} else {
-						favCharacter.setValue(withUserComment, forKey: "favCharacterComments")
-					}
-					
-					// Saving the image (which is Data). If some error occurs in the characterImage, the default placeholder will be shown in the cell along with all the data previously saved in favCharacter.setValue(...)
-					guard let imgData = imgData else { return }
-					
-					self.favCharImg = imgData
-					
-					favCharacter.setValue(self.favCharImg, forKey: "favCharImg")
-					
-					// MARK: Save everything
-					do {
-						try context.save()
-					} catch {
-						print("Error trying to save values inside the URLSession")
-					}
-					
-					DispatchQueue.main.async {
-						self.viewController?.showCharacterSavedSuccessfullyMsg()
-					}
-										
-					/*print("******Show saved favCharacter: \(favCharacter)******")
-					print("------------")*/
-				}
-								
-				task.resume()
+				return false
 			} else {
-				// In case it is needed, uncomment the lines below to check the values
-				/*for result in results as! [NSManagedObject] {
-					print("BEER ALREADY IN FAVORITES!!!!")
-					print("results.count: \(results.count) (should be more than 0), hence this beer CAN NOT be saved in the list of favorites since it's duplicated")
-					print("The fav beerID in result is: \(result.value(forKey: "favCharacterID") as! Int16)")
-					print("The fav beerName in result is: \(result.value(forKey: "favCharacterName") as? String ?? "Beer without Name")")
-					print("The fav beerDescription in result is: \(result.value(forKey: "favCharacterDescription") as? String ?? "No Description Available")")
-					print("-------------------")
-				}*/
+				return true
+			}
+		} catch {
+			print("Error requesting the list of favorite Characters (Inside CharacterDetailsPresenter.isCharInDatabase(...)")
+			
+			return true
+		}
+	}
+	
+	
+	// Save character in the Favorite Characters List
+	// If character already exists in the database, return "true", otherwise it returns "false"
+	func saveCharBtnPressed(viewModel: CharacterDetailsViewModel, withUserComment: String) {
+		guard let imgURLString = viewModel.characterImageURL,
+			  let imgURL = URL(string: imgURLString)
+		else {
+			print("Invalid URL address. Inside CharacterDetailsPresenterImpl.saveCharBtnPressed(...)")
+			
+			return
+		}
+		
+		// Check if wanted beer is already in the favorite list
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate  // Used for CoreData
+		let context 	= appDelegate.persistentContainer.viewContext  // Used for CoreData
+		let request		= NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteCharacter")
+		request.returnsObjectsAsFaults = false
+		//request.predicate = NSPredicate(format: "favCharID == %@", "\(viewModel.characterID)")  // If favCharID is already in Favorite Character list, it won't be saved again. This is not needed since it was already checked in the method isCharInDatabase(...)
+		
+		do {
+			// Just checking if the Character to save is already in the favorites list according to the request.predicate
+			let results = try context.fetch(request)
+			
+			// If the result is 0, then the Character is NOT YET in the favorite list and can be saved in it
+			//results.count (should be 0), therefore: this Character can be saved in the list of favorites since it is not duplicated
+			let task = URLSession.shared.dataTask(with: imgURL) { imgData, imgResponse, imgError in
+				if imgError != nil {
+					print("Error downloading the Character's Image")
+					
+					return
+				}
 				
-				// Character already exists in the Database and message is displayed
-				viewController?.showCharacterCannotBeSavedMsg()
+				// Save new Favorite Character details (usually string and numeric values)
+				let favCharacter = NSEntityDescription.insertNewObject(forEntityName: "FavoriteCharacter", into: context)
+				favCharacter.setValue("\(viewModel.characterID)", forKey: "favCharID")
+				favCharacter.setValue(viewModel.characterName, forKey: "favCharName")
+				
+				// MARK: - Control empty values for the fields that may have.
+				// Character Description
+				guard let description = viewModel.characterDescription  else { return }
+				
+				if description.isEmpty {
+					let noDescription: String = "Character has no description"
+					favCharacter.setValue(noDescription, forKey: "favCharDescription")
+				} else {
+					favCharacter.setValue(description, forKey: "favCharDescription")
+				}
+				
+				// Character comics
+				//print("------Comics------")
+				guard let favCharComics = viewModel.characterComics else { return }
+				
+				fillBibliography(bibliographies: favCharComics,
+								 emptyBibliographyMsg: "Character has no comics",
+								 forKey: "favCharComics")
+				
+				// Character series
+				//print("------Series------")
+				guard let favCharSeries = viewModel.characterSeries else { return }
+				
+				fillBibliography(bibliographies: favCharSeries,
+								 emptyBibliographyMsg: "Character has no series",
+								 forKey: "favCharSeries")
+				
+				// Character stories
+				//print("------Stories------")
+				guard let favCharStories = viewModel.characterStories else { return }
+				
+				fillBibliography(bibliographies: favCharStories,
+								 emptyBibliographyMsg: "Character has no stories",
+								 forKey: "favCharStories")
+				
+				// Character events
+				//print("------Events------")
+				guard let favCharEvents = viewModel.characterEvents else { return }
+				
+				fillBibliography(bibliographies: favCharEvents,
+								 emptyBibliographyMsg: "Character has no events",
+								 forKey: "favCharEvents")
+				
+				
+				// Function to fill the Character's bibliography to save as [String]. Bibliographies can be empty, and if they are, then we append the emptyBibliographyMsg to the array
+				func fillBibliography(bibliographies: [MarvelItems], emptyBibliographyMsg: String, forKey: String) {
+					var bibliographiesToSave = [String]()
+					
+					if bibliographies.isEmpty {
+						bibliographiesToSave.append(emptyBibliographyMsg)
+					} else {
+						for bibliography in bibliographies {
+							bibliographiesToSave.append(bibliography.name)
+						}
+					}
+					
+					favCharacter.setValue(bibliographiesToSave, forKey: forKey)
+				}
+				
+				// Save the user's comments about the saved character. This can later be modified in the FavCharDetailsViewController
+				if withUserComment.isEmpty || withUserComment == "" {
+					favCharacter.setValue("characterSavedCommentsDefaultValue".localized, forKey: "favCharacterComments")
+				} else {
+					favCharacter.setValue(withUserComment, forKey: "favCharacterComments")
+				}
+				
+				// Saving the image (which is Data). If some error occurs in the characterImage, the default placeholder will be shown in the cell along with all the data previously saved in favCharacter.setValue(...)
+				guard let imgData = imgData else { return }
+				
+				self.favCharImg = imgData
+				
+				favCharacter.setValue(self.favCharImg, forKey: "favCharImg")
+				
+				// MARK: Save everything
+				do {
+					try context.save()
+				} catch {
+					print("Error trying to save values inside the URLSession")
+				}
+				
+				DispatchQueue.main.async {
+					self.viewController?.showCharacterSavedSuccessfullyMsg()
+				}
+				
+				/*print("******Show saved favCharacter: \(favCharacter)******")
+				 print("------------")*/
 			}
 			
+			task.resume()
 		} catch {
 			print("Error requesting the list of favorite Characters (Inside CharacterDetailsPresenter")
 		}
