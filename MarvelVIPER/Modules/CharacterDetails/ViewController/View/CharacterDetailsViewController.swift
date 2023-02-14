@@ -96,7 +96,7 @@ class CharacterDetailsViewController: BaseViewController<CharacterDetailsPresent
 		// CANCEL BUTTON
 		let cancel = UIAlertAction(title: "cancelBtnTitle".localized,
 								   style: UIAlertAction.Style.default,
-								   handler: { (action : UIAlertAction!) -> Void in })
+								   handler: { (action: UIAlertAction!) -> Void in })
 		
 		alert.addAction(save)
 		alert.addAction(cancel)
