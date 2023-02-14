@@ -122,7 +122,7 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 				return true
 			}
 		} catch {
-			print("Error requesting the list of favorite Characters (Inside CharacterDetailsPresenter.isCharInDatabase(...)")
+			print("Error requesting the list of favorite Characters (Inside CharacterDetailsPresenter.isCharInDatabase(...))")
 			
 			return true
 		}
