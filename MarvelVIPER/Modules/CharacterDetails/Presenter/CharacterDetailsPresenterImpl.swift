@@ -148,11 +148,7 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 		//request.predicate = NSPredicate(format: "favCharID == %@", "\(viewModel.characterID)")  // If favCharID is already in Favorite Character list, it won't be saved again. This is not needed since it was already checked in the method isCharInDatabase(...)
 		
 		do {
-			// Just checking if the Character to save is already in the favorites list according to the request.predicate
-			let results = try context.fetch(request)
-			
-			// If the result is 0, then the Character is NOT YET in the favorite list and can be saved in it
-			//results.count (should be 0), therefore: this Character can be saved in the list of favorites since it is not duplicated
+			// This Character can be saved in the list of favorites since it is not duplicated
 			let task = URLSession.shared.dataTask(with: imgURL) { imgData, imgResponse, imgError in
 				if imgError != nil {
 					print("Error downloading the Character's Image")
@@ -254,8 +250,6 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 			}
 			
 			task.resume()
-		} catch {
-			print("Error requesting the list of favorite Characters (Inside CharacterDetailsPresenter")
 		}
 	}
 }
