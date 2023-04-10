@@ -11,6 +11,7 @@ import Combine
 import CoreData
 
 
+// MARK: - RequestManagerProtocol
 protocol RequestManagerProtocol: AnyObject {
 	func requestGeneric<T: Decodable>(requestDto: RequestDTO, entityClass: T.Type) -> AnyPublisher<T, ApiError>
 	func requestCharacterSearch<T: Decodable>(requestDto: RequestDTO, entityClass: T.Type) -> AnyPublisher<T, ApiError>
