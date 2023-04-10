@@ -241,7 +241,9 @@ extension CharacterDetailsPresenterImpl: CharacterDetailsPresenterProtocol {
 					print("Error trying to save values inside the URLSession")
 				}
 				
-				DispatchQueue.main.async {
+				DispatchQueue.main.async { [weak self] in
+					guard let self = self else { return }
+				 
 					self.viewController?.showCharacterSavedSuccessfullyMsg()
 				}
 				

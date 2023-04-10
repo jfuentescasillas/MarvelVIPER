@@ -228,7 +228,9 @@ extension CharacterDetailsViewController: UITableViewDelegate {
 extension CharacterDetailsViewController: CharacterDetailsTableViewProtocol {
 	// MARK: Activity Indicator Controllers
 	func startActivity() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.activityIndicator.startAnimating()
 			self.characterDetailsTableView.isHidden = true
 		}
@@ -236,7 +238,9 @@ extension CharacterDetailsViewController: CharacterDetailsTableViewProtocol {
 	
 	
 	func stopAndHideActivity() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.activityIndicator.stopAnimating()
 			self.activityIndicator.hidesWhenStopped = true
 			
