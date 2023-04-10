@@ -102,7 +102,9 @@ class MarvelCharactersListViewController: BaseViewController<MarvelCharactersLis
 extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	// Activity Indicator Controllers
 	func startActivity() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.activityIndicator.startAnimating()
 			self.messageLbl.isHidden = true
 			self.reloadCharsBtnOutlet.isHidden = true
@@ -112,7 +114,9 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	
 	
 	func stopAndHideActivity() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.activityIndicator.stopAnimating()
 			self.activityIndicator.hidesWhenStopped = true
 			
@@ -125,7 +129,9 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	
 	// Reload collectionView
 	func reloadCollectionViewData() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.marvelCharactersCollectionView.reloadData()
 			// layoutIfNeeded() is used in order to see the elements of the collection view in the last cell, otherwise, when the pagination is done, the collection view shows the requested items from the beginning (array's 1st item), and not from the array's last item (which is what is wanted)
 			self.marvelCharactersCollectionView.layoutIfNeeded()
@@ -135,7 +141,9 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	
 	// Scrolls to the last element +2 in the collection view after the pagination or to the last element -1 when the "Reset" button is clicked (after making a character search).
 	func scrollToBottom(atIndex: Int, isUsingPagination: Bool) {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			var index: IndexPath!
 			
 			if isUsingPagination {
@@ -233,7 +241,9 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	
 	// Change "hasMoreCharacters" to false to deactivate the pagination
 	func noMoreCharactersAvailable() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.hasMoreCharacters = false			
 			self.stopAndHideActivity()
 			self.marvelCharactersCollectionView.reloadData()
@@ -242,7 +252,9 @@ extension MarvelCharactersListViewController: MarvelCharactersListViewProtocol {
 	
 	
 	func reactivateHasMoreCharacters() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.hasMoreCharacters = true
 			self.stopAndHideActivity()
 			self.marvelCharactersCollectionView.reloadData()

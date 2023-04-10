@@ -52,13 +52,17 @@ class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPre
 		registerNotifications()
 		
 		if presenter?.numFavChars == 0 {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				
 				self.favCharsTableView.isHidden  	 = true
 				self.emptyFavoritesLbl.isHidden 	 = false
 				self.emptyLogoContainerView.isHidden = false
 			}
 		} else {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				
 				self.favCharsTableView.isHidden  	 = false
 				self.emptyFavoritesLbl.isHidden 	 = true
 				self.emptyLogoContainerView.isHidden = true
@@ -101,7 +105,9 @@ class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPre
 		presenter?.resetOrCancelButtonPressed()
 		
 		// These lines help to hide the keyboard once the cancel button was clicked
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.searchFavCharSearchBar.resignFirstResponder()
 		}
 	}
@@ -111,7 +117,9 @@ class FavoriteCharsViewController: BaseViewController<FavoriteMarvelCharsListPre
 // MARK: - Extension. FavoriteCharsListViewProtocol
 extension FavoriteCharsViewController: FavoriteCharsListViewProtocol {
 	func reloadTableViewData() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.favCharsTableView.reloadData()
 			// layoutIfNeeded() is used in order to see the elements of the collection view in the last cell, otherwise, when the pagination is done, the collection view shows the requested items from the beginning (array's 1st item), and not from the array's last item (which is what is wanted)
 			self.favCharsTableView.layoutIfNeeded()
@@ -120,7 +128,9 @@ extension FavoriteCharsViewController: FavoriteCharsListViewProtocol {
 	
 	
 	func startActivity() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.activityIndicator.startAnimating()
 			self.emptyFavoritesLbl.isHidden      = true
 			self.favCharsTableView.isHidden      = true
@@ -130,7 +140,9 @@ extension FavoriteCharsViewController: FavoriteCharsListViewProtocol {
 	
 	
 	func stopAndHideActivity() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			   
 			self.activityIndicator.stopAnimating()
 			self.activityIndicator.hidesWhenStopped = true
 			
@@ -145,7 +157,7 @@ extension FavoriteCharsViewController: FavoriteCharsListViewProtocol {
 // MARK: - Extension: UITableViewDataSource
 extension FavoriteCharsViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		presenter?.numFavChars ?? 0
+		return presenter?.numFavChars ?? 0
 	}
 	
 	
